@@ -3,9 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import axios from 'axios';
 import bcrypt from 'bcrypt';
-import { UserEmailService } from 'services/api/emails/user';
-
-const userEmailService = new UserEmailService();
 
 // import jwt from 'jsonwebtoken';
 
@@ -69,8 +66,8 @@ export default async function register(req: NextApiRequest, res : NextApiRespons
 
       // send email
 
-      const emailResult = await userEmailService.registerUser(data);
-      console.log('EMAIL RESULT: ', emailResult);
+      // const emailResult = await userEmailService.registerUser(data);
+      // console.log('EMAIL RESULT: ', emailResult);
 
       // success
       return res.status(201).json({
