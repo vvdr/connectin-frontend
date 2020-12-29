@@ -65,14 +65,11 @@ const validationSchema = yup.object().shape({
     .required(requiredField('Start Date')),
 
   notes_about_them: yup
-    .string()
-    .required(requiredField('Notes Required')),
+    .string(),
   notes_advice_wanted: yup
-    .string()
-    .required(requiredField('Notes Required')),
+    .string(),
   notes_what_is_common: yup
-    .string()
-    .required(requiredField('Notes Required')),
+    .string(),
 
 });
 
@@ -135,7 +132,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             <FormItem
               help={formik.touched.first_name && formik.errors.first_name ? formik.errors.first_name : ''}
               validateStatus={formik.touched.first_name && formik.errors.first_name ? 'error' : undefined}
-              label="First Name"
+              label="First Name*"
             >
               <Input
                 name="first_name"
@@ -150,7 +147,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             <FormItem
               help={formik.touched.last_name && formik.errors.last_name ? formik.errors.last_name : ''}
               validateStatus={formik.touched.last_name && formik.errors.last_name ? 'error' : undefined}
-              label="Last Name"
+              label="Last Name*"
             >
               <Input
                 name="last_name"
@@ -165,7 +162,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             <FormItem
               help={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
               validateStatus={formik.touched.email && formik.errors.email ? 'error' : undefined}
-              label="Email"
+              label="Email*"
             >
               <Input
                 name="email"
@@ -183,7 +180,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             <FormItem
               help={formik.touched.company_name && formik.errors.company_name ? formik.errors.company_name : ''}
               validateStatus={formik.touched.company_name && formik.errors.company_name ? 'error' : undefined}
-              label="Company Name"
+              label="Company Name*"
             >
               <Input
                 name="company_name"
@@ -198,7 +195,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             <FormItem
               help={formik.touched.phone_number && formik.errors.phone_number ? formik.errors.phone_number : ''}
               validateStatus={formik.touched.phone_number && formik.errors.phone_number ? 'error' : undefined}
-              label="Phone Number"
+              label="Phone Number*"
             >
               <Input
                 name="phone_number"
@@ -213,7 +210,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             <FormItem
               help={formik.touched.frequency && formik.errors.frequency ? formik.errors.frequency : ''}
               validateStatus={formik.touched.frequency && formik.errors.frequency ? 'error' : undefined}
-              label="Connect Frequency"
+              label="Connect Frequency*"
             >
               <Select
                 placeholder="Connect Frequency"
@@ -237,7 +234,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             <FormItem
               help={formik.touched.next_reminder_date && formik.errors.next_reminder_date ? formik.errors.next_reminder_date : ''}
               validateStatus={formik.touched.next_reminder_date && formik.errors.next_reminder_date ? 'error' : undefined}
-              label="Next Reminder Date"
+              label="Next Reminder Date*"
             >
               <Space direction="horizontal">
                 <DatePicker

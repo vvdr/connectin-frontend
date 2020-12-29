@@ -4,9 +4,9 @@ export type Connect = {
   email: string
   company_name: string
   phone_number: string
-  notes_about_them: string
-  notes_advice_wanted: string
-  notes_what_is_common: string,
+  notes_about_them?: string
+  notes_advice_wanted?: string
+  notes_what_is_common?: string,
   frequency: string,
   next_reminder_date: string |undefined,
   user_id?: string

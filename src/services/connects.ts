@@ -15,9 +15,9 @@ const INSERT_CONNECTS_ONE = `
     $last_name: String!, 
     $phone_number: String!,
     $frequency: String!
-    $notes_about_them: String!
-    $notes_advice_wanted: String!
-    $notes_what_is_common: String!,
+    $notes_about_them: String
+    $notes_advice_wanted: String
+    $notes_what_is_common: String,
     $next_reminder_date: timestamp!
     $user_id: uuid!,
   ) {
@@ -50,9 +50,9 @@ const UPDATE_CONNECT = `
     $last_name: String!, 
     $phone_number: String!,
     $frequency: String!
-    $notes_about_them: String!
-    $notes_advice_wanted: String!
-    $notes_what_is_common: String!,
+    $notes_about_them: String
+    $notes_advice_wanted: String
+    $notes_what_is_common: String,
     $next_reminder_date: timestamp!
     $connect_id: uuid!,
   ) {
