@@ -1,30 +1,17 @@
 /* eslint-disable camelcase */
 import type { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Auth } from 'types/auth';
+import { getUserWithEmail } from 'services/api/user';
 
 const jwtKey = process.env.CI_JWT_SECRET_KEY || '';
-const hasuraEndpoint = `${process.env.CI_HASURA_GRAPQHL_ENDPOINT}/graphql`;
 
 type Data = {
   message: string
   code?: string | number,
   auth?: Auth
  }
-
-const GET_USER_WITH_EMAIL_OPERATION = `
-  query($email: String!) {
-    users(where: {email: {_eq: $email}}) {
-      email
-      first_name
-      last_name
-      user_id
-      password
-    }
-  }
-`;
 
 export default async function login(req: NextApiRequest, res : NextApiResponse<Data>) {
   if (req.method === 'POST') {
@@ -33,16 +20,7 @@ export default async function login(req: NextApiRequest, res : NextApiResponse<D
         email, password,
       } = req.body;
 
-      const variables = {
-        email,
-      };
-
-      const body = JSON.stringify({
-        query: GET_USER_WITH_EMAIL_OPERATION,
-        variables,
-      });
-
-      const { data: resData } = await axios.post(hasuraEndpoint, body);
+      const { data: resData } = await getUserWithEmail(email);
 
       const { data, errors } = resData;
 

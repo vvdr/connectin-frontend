@@ -10,7 +10,6 @@ import styled from 'styled-components';
 import { User } from 'types/user';
 import { registerUser } from 'services/auth';
 import { useState } from 'react';
-import { sengRegisterUserEmail } from 'services/api/emails/user';
 
 const StyledForm = styled.div(
   ({
@@ -82,9 +81,6 @@ const RegisterForm: React.FC = () => {
       console.log('Data: ', data);
       message.success(data.message);
 
-      const emailResp = await sengRegisterUserEmail(values);
-
-      console.log('EMAIL RESPONSE', emailResp);
       setLoading(false);
       Router.replace('/login');
     } catch (error) {

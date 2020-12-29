@@ -1,24 +1,68 @@
 /* eslint-disable prefer-const */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
-import SendgridMail from '@sendgrid/mail';
 import { SENDGRID_SENDER_EMAIL } from 'utils/constants';
-import { MainLayout } from './templates/layout';
-import {
-  VERIFY_USER_CONTENT,
-} from './templates/user';
+import axios from './email-http.service';
 
-const defaultEmail = {
-  to: '',
-  from: SENDGRID_SENDER_EMAIL,
-  cc: [],
-  subject: 'Connectin App',
-  html: MainLayout(''),
-};
+// import { MainLayout } from './templates/layout';
+// import {
+//   VERIFY_USER_CONTENT,
+// } from './templates/user';
 
-export const sengRegisterUserEmail = (user: any): Promise<any> => {
+export const sendRegisterUserEmail = (user: any): Promise<any> => {
   const { email } = user;
 
-  return SendgridMail.send({ ...defaultEmail, to: email, html: VERIFY_USER_CONTENT(user) });
+  const body = {
+    personalizations: [
+      {
+        to: [
+          {
+            email,
+          },
+        ],
+        subject: 'Account Created - Connectin :)',
+      },
+    ],
+    from: {
+      email: SENDGRID_SENDER_EMAIL,
+      name: 'ConnectinApp',
+    },
+    content: [
+      {
+        type: 'text/html',
+        value: `Account Created:  <b>${'Verify'}</b>, you just sent an email.`,
+      },
+    ],
+  };
+  return axios.post('/', JSON.stringify(body));
+};
+
+export const sendResetPasswordEmail = (email:string): Promise<any> => {
+//   console.log('RESET PASSWORD EMAIL', email);
+//   const content = RESET_USER_PASSWORD_CONTENT({ token: 'sometoken', fullName: 'full Name' });
+
+  // console.log('CONENT: ++++++++++++++', content);
+  const body = {
+    personalizations: [
+      {
+        to: [
+          {
+            email,
+          },
+        ],
+        subject: 'Reset Password - Connectin :)',
+      },
+    ],
+    from: {
+      email: SENDGRID_SENDER_EMAIL,
+      name: 'ConnectinApp',
+    },
+    content: [
+      {
+        type: 'text/html',
+        value: `Rest passowrd:  <b>${'Click Here'}</b>, you just sent an email.`,
+      },
+    ],
+  };
+  return axios.post('/send', JSON.stringify(body));
 };

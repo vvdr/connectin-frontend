@@ -5,6 +5,7 @@ import axios from 'axios';
 import bcrypt from 'bcrypt';
 
 // import jwt from 'jsonwebtoken';
+import { sendRegisterUserEmail } from 'services/api/emails/user';
 
 // const jwtKey = process.env.CI_JWT_SECRET_KEY || '';
 // const adminEmail = process.env.CI_ADMIN_EMAIL;
@@ -66,7 +67,7 @@ export default async function register(req: NextApiRequest, res : NextApiRespons
 
       // send email
 
-      // const emailResult = await userEmailService.registerUser(data);
+      await sendRegisterUserEmail(email);
       // console.log('EMAIL RESULT: ', emailResult);
 
       // success
