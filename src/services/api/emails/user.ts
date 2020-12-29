@@ -2,16 +2,14 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { SENDGRID_SENDER_EMAIL } from 'utils/constants';
-import axios from './email-http.service';
+import emailHttpService from './email-http.service';
 
 // import { MainLayout } from './templates/layout';
 // import {
 //   VERIFY_USER_CONTENT,
 // } from './templates/user';
 
-export const sendRegisterUserEmail = (user: any): Promise<any> => {
-  const { email } = user;
-
+export const sendRegisterUserEmail = (email: string): Promise<any> => {
   const body = {
     personalizations: [
       {
@@ -34,7 +32,7 @@ export const sendRegisterUserEmail = (user: any): Promise<any> => {
       },
     ],
   };
-  return axios.post('/', JSON.stringify(body));
+  return emailHttpService.post('/send', JSON.stringify(body));
 };
 
 export const sendResetPasswordEmail = (email:string): Promise<any> => {
@@ -64,5 +62,5 @@ export const sendResetPasswordEmail = (email:string): Promise<any> => {
       },
     ],
   };
-  return axios.post('/send', JSON.stringify(body));
+  return emailHttpService.post('/send', JSON.stringify(body));
 };
