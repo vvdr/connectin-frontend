@@ -8,7 +8,7 @@ export type Connect = {
   notes_advice_wanted: string
   notes_what_is_common: string,
   frequency: string,
-  start_date: string,
+  next_reminder_date: string,
   user_id?: string
   connect_id?:string
 }

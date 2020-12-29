@@ -3,12 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import axios from 'axios';
 import bcrypt from 'bcrypt';
-
-// import jwt from 'jsonwebtoken';
 import { sendRegisterUserEmail } from 'services/api/emails/user';
 
-// const jwtKey = process.env.CI_JWT_SECRET_KEY || '';
-// const adminEmail = process.env.CI_ADMIN_EMAIL;
 const hasuraEndpoint = `${process.env.CI_HASURA_GRAPQHL_ENDPOINT}/graphql`;
 
 type Data = {

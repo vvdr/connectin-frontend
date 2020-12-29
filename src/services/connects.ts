@@ -18,7 +18,7 @@ const INSERT_CONNECTS_ONE = `
     $notes_about_them: String!
     $notes_advice_wanted: String!
     $notes_what_is_common: String!,
-    $start_date: timestamp!
+    $next_reminder_date: timestamp!
     $user_id: uuid!,
   ) {
     insert_connects_one(object: {
@@ -31,7 +31,7 @@ const INSERT_CONNECTS_ONE = `
       notes_advice_wanted: $notes_advice_wanted, 
       notes_what_is_common: $notes_what_is_common, 
       phone_number: $phone_number, 
-      start_date: $start_date
+      next_reminder_date: $next_reminder_date
       user_id:$user_id
     })
     {
@@ -53,7 +53,7 @@ const UPDATE_CONNECT = `
     $notes_about_them: String!
     $notes_advice_wanted: String!
     $notes_what_is_common: String!,
-    $start_date: timestamp!
+    $next_reminder_date: timestamp!
     $connect_id: uuid!,
   ) {
     update_connects(
@@ -68,7 +68,7 @@ const UPDATE_CONNECT = `
       notes_advice_wanted: $notes_advice_wanted, 
       notes_what_is_common: $notes_what_is_common, 
       phone_number: $phone_number, 
-      start_date: $start_date
+      next_reminder_date: $next_reminder_date
     })
     {
       affected_rows
@@ -89,7 +89,7 @@ const GET_CONNECTS = `
       notes_advice_wanted
       notes_what_is_common
       phone_number
-      start_date
+      next_reminder_date
     }
   }
 `;
@@ -107,7 +107,7 @@ const GET_CONNECT = `
       notes_advice_wanted
       notes_what_is_common
       phone_number
-      start_date
+      next_reminder_date
     }
   }
 `;

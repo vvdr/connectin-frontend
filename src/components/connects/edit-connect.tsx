@@ -18,7 +18,7 @@ const initialValues: Connect = {
   notes_advice_wanted: '',
   notes_what_is_common: '',
   frequency: '',
-  start_date: '',
+  next_reminder_date: '',
 };
 
 const EditConnectComp: React.FC = () => {

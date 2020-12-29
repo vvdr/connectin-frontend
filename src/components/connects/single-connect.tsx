@@ -52,7 +52,7 @@ const SingleConnectComp: React.FC = () => {
     frequency, company_name, notes_about_them,
     notes_advice_wanted,
     notes_what_is_common,
-    start_date,
+    next_reminder_date,
   } = connect || {};
 
   return (
@@ -147,11 +147,11 @@ const SingleConnectComp: React.FC = () => {
             </Col>
 
             <Col span={6}>
-              {JSON.stringify(moment.utc(start_date).tz(timezone).format('dddd, MMMM Do YYYY, h:mm:ss a'))}
+              {JSON.stringify(moment.utc(next_reminder_date).tz(timezone).format('dddd, MMMM Do YYYY, h:mm:ss a'))}
               <List.Item>
                 <List.Item.Meta
                   title="Start Date"
-                  description={<Moment date={moment.utc(start_date).tz(timezone)} format="dddd, MMMM Do YYYY, h:mm:ss a" />}
+                  description={<Moment date={moment.utc(next_reminder_date).tz(timezone)} format="dddd, MMMM Do YYYY, h:mm:ss a" />}
                 />
               </List.Item>
             </Col>

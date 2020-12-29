@@ -60,7 +60,7 @@ const validationSchema = yup.object().shape({
   frequency: yup
     .string()
     .required(requiredField('Freqency')),
-  start_date: yup
+  next_reminder_date: yup
     .string()
     .required(requiredField('Start Date')),
 
@@ -205,18 +205,18 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
           </Col>
           <Col xs={24} sm={12}>
             <FormItem
-              help={formik.touched.start_date && formik.errors.start_date ? formik.errors.start_date : ''}
-              validateStatus={formik.touched.start_date && formik.errors.start_date ? 'error' : undefined}
-              label="Start Date"
+              help={formik.touched.next_reminder_date && formik.errors.next_reminder_date ? formik.errors.next_reminder_date : ''}
+              validateStatus={formik.touched.next_reminder_date && formik.errors.next_reminder_date ? 'error' : undefined}
+              label="Next Reminder Date"
             >
               <Space direction="horizontal">
                 <DatePicker
-                  value={moment(formik.values.start_date)}
-                  placeholder="Start Date"
-                  name="start_date"
+                  value={moment(formik.values.next_reminder_date)}
+                  placeholder="Next Reminder Date"
+                  name="next_reminder_date"
                   onChange={(date) => {
                     const isoDate = date?.toISOString();
-                    formik.setFieldValue('start_date', isoDate);
+                    formik.setFieldValue('next_reminder_date', isoDate);
                   }}
                 />
               </Space>
