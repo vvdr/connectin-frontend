@@ -18,7 +18,7 @@ const LeftMenu = ({ mode }:Iprops) => (
       </Link>
     </Menu.Item>
     <Menu.Item>
-      <Link href="/contact-us">
+      <Link href="/contact">
         <a>Contact</a>
       </Link>
     </Menu.Item>
