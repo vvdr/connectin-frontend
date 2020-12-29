@@ -5,12 +5,12 @@ import {
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
-import { login } from 'services/auth';
-import Router from 'next/router';
+// import { useContext, useState } from 'react';
+// import { login } from 'services/auth';
+// import Router from 'next/router';
 import Link from 'next/link';
 
-import { authContext, ContextProps } from 'utils/auth-provider';
+// import { authContext, ContextProps } from 'utils/auth-provider';
 
 const StyledForm = styled.div(
   ({
@@ -34,7 +34,6 @@ const StyledForm = styled.div(
 );
 
 const emailNotLongEnough = 'Email must be at least 3 characters';
-const passwordNotLongEnough = 'Password must be at least 3 characters';
 const invalidEmail = 'Email must be a valid email';
 
 const validationSchema = yup.object().shape({
@@ -44,28 +43,26 @@ const validationSchema = yup.object().shape({
     .max(255)
     .email(invalidEmail)
     .required(),
-  password: yup
-    .string()
-    .min(3, passwordNotLongEnough)
-    .max(255)
-    .required(),
 });
 
 const FormItem = Form.Item;
 
-const LoginForm: React.FC = () => {
+const ForgotPasswordForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const auth = useContext<ContextProps>(authContext);
+  // const auth = useContext<ContextProps>(authContext);
 
   const handleSubmit = async (values: any) => {
+    console.log('handle submit', values);
     setLoading(true);
     try {
-      const { data } = await login(values);
-      console.log('Data: ', data);
-      message.success(data.message);
+      // const { data } = await login(values);
+      // console.log('Data: ', data);
+      message.success('Password resent email has been sent.');
+
+      // message.success(data.message);
       setLoading(false);
-      auth.dispatch({ type: 'LOGIN_USER', auth: data.auth });
-      Router.replace('/');
+      // auth.dispatch({ type: 'LOGIN_USER', auth: data.auth });
+      // Router.replace('/');
     } catch (error) {
       console.log('SOMETHING WENT WRONG:', error && error.response);
       message.error(error.response.data.message);
@@ -77,7 +74,6 @@ const LoginForm: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     validationSchema,
     onSubmit: handleSubmit,
@@ -88,7 +84,7 @@ const LoginForm: React.FC = () => {
       <Spin spinning={loading}>
         <Form
           layout="vertical"
-          name="login-form"
+          name="forgot-password-form"
           onFinish={formik.handleSubmit}
         >
           <FormItem
@@ -107,33 +103,13 @@ const LoginForm: React.FC = () => {
               onBlur={formik.handleBlur}
             />
           </FormItem>
-
-          <FormItem
-            label="Password"
-            help={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
-            validateStatus={
-            formik.touched.password && formik.errors.password ? 'error' : undefined
-          }
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input.Password
-              name="password"
-              placeholder="Password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          </FormItem>
           <FormItem>
             <Button type="primary" key="submit" htmlType="submit">
-              Submit
+              Reset
             </Button>
-            <Link href="/forgot-password">
-              <a className="link">Forgot Password</a>
+
+            <Link href="/login">
+              <a className="link"> Login</a>
             </Link>
           </FormItem>
         </Form>
@@ -142,4 +118,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;

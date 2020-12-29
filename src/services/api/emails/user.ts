@@ -17,7 +17,7 @@ const defaultEmail = {
   html: MainLayout(''),
 };
 
-export const registerUser = (user: any): Promise<any> => {
+export const sengRegisterUserEmail = (user: any): Promise<any> => {
   const { email } = user;
 
   return SendgridMail.send({ ...defaultEmail, to: email, html: VERIFY_USER_CONTENT(user) });
