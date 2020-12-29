@@ -61,7 +61,7 @@ const validationSchema = yup.object().shape({
     .string()
     .required(requiredField('Freqency')),
   next_reminder_date: yup
-    .string()
+    .date()
     .required(requiredField('Start Date')),
 
   notes_about_them: yup
@@ -90,6 +90,36 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
     enableReinitialize: true,
     onSubmit: handleSubmit,
   });
+
+  const handleFrequencyChange = (value: string) => {
+    formik.setFieldValue('frequency', value);
+    let nextDate;
+    switch (value) {
+      case '30-days':
+        nextDate = moment().add(30, 'd').toISOString();
+        break;
+
+      case '60-days':
+        nextDate = moment().add(60, 'd').toISOString();
+        break;
+
+      case '90-days':
+        nextDate = moment().add(90, 'd').toISOString();
+        break;
+      case '180-days':
+        nextDate = moment().add(180, 'd').toISOString();
+        break;
+
+      case 'yearly':
+        nextDate = moment().add(1, 'y').toISOString();
+        break;
+
+      default:
+        break;
+    }
+
+    formik.setFieldValue('next_reminder_date', nextDate);
+  };
 
   console.log('FORMIK VALUES:', formik.values);
 
@@ -189,7 +219,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
                 placeholder="Connect Frequency"
                 style={{ width: 120 }}
                 value={formik.values.frequency}
-                onChange={(value) => { formik.setFieldValue('frequency', value); }}
+                onChange={handleFrequencyChange}
                 onBlur={formik.handleBlur}
                 onSelect={formik.handleChange}
               >
@@ -211,7 +241,8 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
             >
               <Space direction="horizontal">
                 <DatePicker
-                  value={moment(formik.values.next_reminder_date)}
+                  value={formik.values.next_reminder_date
+                    ? moment(formik.values.next_reminder_date) : undefined}
                   placeholder="Next Reminder Date"
                   name="next_reminder_date"
                   onChange={(date) => {
