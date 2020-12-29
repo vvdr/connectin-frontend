@@ -1,28 +1,18 @@
 import { useState } from 'react';
-import { Drawer, Button } from 'antd';
+import {
+  Drawer, Button, Row, Col,
+} from 'antd';
 import LeftMenu from 'components/common/navbar/left-menu';
+import RightMenu from 'components/common/navbar/right-menu';
 import styled from 'styled-components';
 import Link from 'next/link';
-import RightMenu from './right-menu';
 
-const StyledNavbar = styled.nav`
-  padding: 0 20px;
-  border-bottom: solid 1px #e8e8e8;
-  overflow: auto;
-  box-shadow: 0 0 30px #f3f1f1;
-
+const StyledNavbar = styled.nav(({ theme: { colors } }) => `
   & .logo {
-    width: 150px;
-    float: left;
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
   }
-
-  & .logo a {
-    display: inline-block;
-    font-size: 20px;
-    padding: 19px 20px;
-    text-transform: capitalize;
-  }
-
 
   & .menuCon {
     display: flex;
@@ -44,7 +34,15 @@ const StyledNavbar = styled.nav`
   & .menuCon .ant-menu-horizontal {
     border-bottom: none;
     line-height: 67px;
+  }
 
+  & .ant-menu-horizontal > .ant-menu-item-selected a {
+    color: ${colors.primary} !important;
+  }
+
+  & .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected{
+    color: red !important;
+    border-bottom-color: ${colors.primary} !important;
   }
   
   & .menuCon .leftMenu {
@@ -111,6 +109,10 @@ const StyledNavbar = styled.nav`
     border-bottom-color: transparent;
   }
   
+  & .ant-menu {
+    font-size: 18px;
+  }
+
   @media (max-width: 767px) {
     & .barsMenu {
       display: inline-block;
@@ -138,7 +140,7 @@ const StyledNavbar = styled.nav`
       padding: 10px 20px;
     }
   }
-`;
+`);
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
@@ -153,32 +155,39 @@ const Navbar = () => {
 
   return (
     <StyledNavbar>
-      <div className="logo">
-        <Link href="/">
-          <a>ConnectIn</a>
-        </Link>
-      </div>
-      <div className="menuCon">
-        <div className="leftMenu">
-          <LeftMenu />
-        </div>
-        <div className="rightMenu">
-          <RightMenu />
-        </div>
-        <Button className="barsMenu" type="primary" onClick={showDrawer}>
-          <span className="barsBtn" />
-        </Button>
-        <Drawer
-          title="Connectin"
-          placement="right"
-          closable={false}
-          onClose={onClose}
-          visible={visible}
-        >
-          <LeftMenu mode="vertical" />
-          <RightMenu />
-        </Drawer>
-      </div>
+      <Row justify="center" align="middle">
+        <Col xs={{ span: 20 }} sm={{ span: 16 }} md={{ span: 4 }}>
+          <div className="logo">
+            <Link href="/">
+              <a>ConnectIn</a>
+            </Link>
+          </div>
+        </Col>
+        <Col xs={{ span: 4 }} sm={{ span: 8 }} md={{ span: 20 }}>
+          <div className="menuCon">
+            <div className="leftMenu">
+              <LeftMenu />
+            </div>
+            <div className="rightMenu">
+              <RightMenu />
+            </div>
+            <Button className="barsMenu" type="primary" onClick={showDrawer}>
+              <span className="barsBtn" />
+            </Button>
+            <Drawer
+              title="ConnectIn"
+              placement="right"
+              closable={false}
+              onClose={onClose}
+              visible={visible}
+            >
+              <LeftMenu mode="vertical" />
+              <RightMenu />
+            </Drawer>
+          </div>
+        </Col>
+      </Row>
+
     </StyledNavbar>
   );
 };

@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
 
 const theme = {
   colors: {
-    primary: '#FF3364',
+    primary: '#1890ff',
     secondary: '#FCC163',
     tertiary: '#76DED7',
     quaternary: '#083763',

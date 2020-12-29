@@ -1,4 +1,4 @@
-import AboutComp from 'components/about-us';
+import AboutComp from 'components/about';
 import Head from 'next/head';
 import MainLayout from 'components/common/layout';
 import PageWithLayoutType from 'types/page-with-layout';

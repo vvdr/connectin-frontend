@@ -13,7 +13,7 @@ const LeftMenu = ({ mode }:Iprops) => (
       </Link>
     </Menu.Item>
     <Menu.Item>
-      <Link href="/about-us">
+      <Link href="/about">
         <a>About</a>
       </Link>
     </Menu.Item>
