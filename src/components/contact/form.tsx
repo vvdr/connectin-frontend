@@ -1,11 +1,12 @@
 import {
-  Form, Input, Button, Row, Col, Spin,
+  Form, Input, Button, Row, Col, Spin, message,
 } from 'antd';
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { sendContactFormEmail } from 'services/emails';
 
 const { TextArea } = Input;
 
@@ -46,8 +47,12 @@ const validationSchema = yup.object().shape({
     .required(requiredField('Email')),
   message: yup
     .string()
-    .max(255)
+    .max(800)
     .required(requiredField('Message')),
+  subject: yup
+    .string()
+    .max(255)
+    .required(requiredField('Subject')),
   phone_number: yup
     .string()
     .max(255)
@@ -61,16 +66,15 @@ const RegisterForm: React.FC = () => {
 
   const handleSubmit = async (values: any) => {
     setLoading(true);
-    console.log('Formik Values,', JSON.stringify(values));
+
     try {
-      // const { data } = await registerUser(values);
-      // console.log('Data: ', data);
-      // message.success(data.message);
-      // setLoading(false);
-      // Router.replace('/login');
+      const { data } = await sendContactFormEmail(values);
+      console.log('Data: ', data);
+      message.success(data.message);
+      setLoading(false);
     } catch (error) {
-      // console.log('SOMETHING WENT WRONG:', error && error.response);
-      // message.error('Something went wrong.');
+      console.log('SOMETHING WENT WRONG:', error && error.response);
+      message.error('Something went wrong.');
       setLoading(false);
     }
     console.log('Formik Values,', JSON.stringify(values));
@@ -83,6 +87,7 @@ const RegisterForm: React.FC = () => {
       email: '',
       phone_number: '',
       message: '',
+      subject: '',
     },
     validationSchema,
     onSubmit: handleSubmit,
@@ -159,6 +164,21 @@ const RegisterForm: React.FC = () => {
             </Col>
             <Col xs={24} sm={12}>
               <FormItem
+                help={formik.touched.subject && formik.errors.subject ? formik.errors.subject : ''}
+                validateStatus={formik.touched.subject && formik.errors.subject ? 'error' : undefined}
+                label="Subject"
+              >
+                <Input
+                  name="subject"
+                  placeholder="Subject"
+                  value={formik.values.subject}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              </FormItem>
+            </Col>
+            <Col xs={24} sm={12}>
+              <FormItem
                 help={formik.touched.message && formik.errors.message ? formik.errors.message : ''}
                 validateStatus={formik.touched.message && formik.errors.message ? 'error' : undefined}
                 label="Message"
@@ -167,7 +187,7 @@ const RegisterForm: React.FC = () => {
                   name="message"
                   placeholder="Message"
                   showCount
-                  maxLength={100}
+                  maxLength={800}
                   value={formik.values.message}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
