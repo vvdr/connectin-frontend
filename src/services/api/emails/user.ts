@@ -1,8 +1,8 @@
 /* eslint-disable prefer-const */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { SENDGRID_SENDER_EMAIL } from 'utils/constants';
-import emailHttpService from './email-http.service';
+import { SENDGRID_SENDER_EMAIL } from 'utils/constants'
+import emailHttpService from './email-http.service'
 
 // import { MainLayout } from './templates/layout';
 // import {
@@ -31,9 +31,9 @@ export const sendRegisterUserEmail = (email: string): Promise<any> => {
         value: `Account Created:  <b>${'Verify'}</b>, you just sent an email.`,
       },
     ],
-  };
-  return emailHttpService.post('/send', JSON.stringify(body));
-};
+  }
+  return emailHttpService.post('/send', JSON.stringify(body))
+}
 
 export const sendResetPasswordEmail = (email:string): Promise<any> => {
 //   console.log('RESET PASSWORD EMAIL', email);
@@ -61,6 +61,6 @@ export const sendResetPasswordEmail = (email:string): Promise<any> => {
         value: `Rest passowrd:  <b>${'Click Here'}</b>, you just sent an email.`,
       },
     ],
-  };
-  return emailHttpService.post('/send', JSON.stringify(body));
-};
+  }
+  return emailHttpService.post('/send', JSON.stringify(body))
+}

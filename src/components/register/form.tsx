@@ -1,15 +1,15 @@
 import {
   Form, Input, Button, Row, Col, Spin, message,
-} from 'antd';
+} from 'antd'
 
-import Router from 'next/router';
+import Router from 'next/router'
 
-import * as yup from 'yup';
-import { useFormik } from 'formik';
-import styled from 'styled-components';
-import { User } from 'types/user';
-import { registerUser } from 'services/auth';
-import { useState } from 'react';
+import * as yup from 'yup'
+import { useFormik } from 'formik'
+import styled from 'styled-components'
+import { User } from 'types/user'
+import { registerUser } from 'services/auth'
+import { useState } from 'react'
 
 const StyledForm = styled.div(
   ({
@@ -25,12 +25,12 @@ const StyledForm = styled.div(
     padding: 0 15px;
   } 
 `,
-);
+)
 
-const emailNotLongEnough = 'email must be at least 3 characters';
-const passwordNotLongEnough = (length = 3) => `password must be at least ${length} characters`;
-const invalidEmail = 'email must be a valid email';
-const requiredField = (fieldName: string) => `${fieldName} is required.`;
+const emailNotLongEnough = 'email must be at least 3 characters'
+const passwordNotLongEnough = (length = 3) => `password must be at least ${length} characters`
+const invalidEmail = 'email must be a valid email'
+const requiredField = (fieldName: string) => `${fieldName} is required.`
 
 const validationSchema = yup.object().shape({
   first_name: yup
@@ -67,29 +67,29 @@ const validationSchema = yup.object().shape({
     .required(requiredField('Confirm Password'))
     .oneOf([yup.ref('password'), ''], 'Passwords must match'),
 
-});
+})
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 const RegisterForm: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = async (values: User) => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const { data } = await registerUser(values);
-      console.log('Data: ', data);
-      message.success(data.message);
+      const { data } = await registerUser(values)
+      console.log('Data: ', data)
+      message.success(data.message)
 
-      setLoading(false);
-      Router.replace('/login');
+      setLoading(false)
+      Router.replace('/login')
     } catch (error) {
-      console.log('SOMETHING WENT WRONG:', error && error.response);
-      message.error('Something went wrong.');
-      setLoading(false);
+      console.log('SOMETHING WENT WRONG:', error && error.response)
+      message.error('Something went wrong.')
+      setLoading(false)
     }
-    console.log('Formik Values,', JSON.stringify(values, null, 2));
-  };
+    console.log('Formik Values,', JSON.stringify(values, null, 2))
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -103,7 +103,7 @@ const RegisterForm: React.FC = () => {
     },
     validationSchema,
     onSubmit: handleSubmit,
-  });
+  })
 
   return (
     <StyledForm>
@@ -155,8 +155,8 @@ const RegisterForm: React.FC = () => {
                   placeholder="Email / Username"
                   value={formik.values.email}
                   onChange={(event) => {
-                    const formattedEmail = event.target.value.toLowerCase();
-                    formik.setFieldValue('email', formattedEmail);
+                    const formattedEmail = event.target.value.toLowerCase()
+                    formik.setFieldValue('email', formattedEmail)
                   }}
                   onBlur={formik.handleBlur}
                 />
@@ -233,7 +233,7 @@ const RegisterForm: React.FC = () => {
         </Form>
       </Spin>
     </StyledForm>
-  );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm

@@ -1,7 +1,7 @@
-import HomeComp from 'components/home';
-import Head from 'next/head';
-import MainLayout from 'components/common/layout';
-import PageWithLayoutType from 'types/page-with-layout';
+import HomeComp from 'components/home'
+import Head from 'next/head'
+import MainLayout from 'components/common/layout'
+import PageWithLayoutType from 'types/page-with-layout'
 
 const HomePage: React.FC = () => (
   <div>
@@ -12,6 +12,6 @@ const HomePage: React.FC = () => (
   </div>
 );
 
-(HomePage as PageWithLayoutType).layout = MainLayout;
+(HomePage as PageWithLayoutType).layout = MainLayout
 
-export default HomePage;
+export default HomePage

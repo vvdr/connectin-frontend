@@ -3,16 +3,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import {
   Form, Input, Button, Row, Col, Select, DatePicker, Space,
-} from 'antd';
+} from 'antd'
 
-import * as yup from 'yup';
-import { useFormik } from 'formik';
-import styled from 'styled-components';
-import { Connect } from 'types/connect';
-import moment from 'moment-timezone';
+import * as yup from 'yup'
+import { useFormik } from 'formik'
+import styled from 'styled-components'
+import { Connect } from 'types/connect'
+import moment from 'moment-timezone'
 
-const { Option } = Select;
-const { TextArea } = Input;
+const { Option } = Select
+const { TextArea } = Input
 
 const StyledForm = styled.div(
   ({
@@ -28,11 +28,11 @@ const StyledForm = styled.div(
     padding: 0 15px;
   } 
 `,
-);
+)
 
-const emailNotLongEnough = 'email must be at least 3 characters';
-const invalidEmail = 'email must be a valid email';
-const requiredField = (fieldName: string) => `${fieldName} is required.`;
+const emailNotLongEnough = 'email must be at least 3 characters'
+const invalidEmail = 'email must be a valid email'
+const requiredField = (fieldName: string) => `${fieldName} is required.`
 
 const validationSchema = yup.object().shape({
   first_name: yup
@@ -71,9 +71,9 @@ const validationSchema = yup.object().shape({
   notes_what_is_common: yup
     .string(),
 
-});
+})
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 type Props = {
   handleSubmit: (values: Connect)=> void
@@ -86,39 +86,39 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
     validationSchema,
     enableReinitialize: true,
     onSubmit: handleSubmit,
-  });
+  })
 
   const handleFrequencyChange = (value: string) => {
-    formik.setFieldValue('frequency', value);
-    let nextDate;
+    formik.setFieldValue('frequency', value)
+    let nextDate
     switch (value) {
       case '30-days':
-        nextDate = moment().add(30, 'd').toISOString();
-        break;
+        nextDate = moment().add(30, 'd').toISOString()
+        break
 
       case '60-days':
-        nextDate = moment().add(60, 'd').toISOString();
-        break;
+        nextDate = moment().add(60, 'd').toISOString()
+        break
 
       case '90-days':
-        nextDate = moment().add(90, 'd').toISOString();
-        break;
+        nextDate = moment().add(90, 'd').toISOString()
+        break
       case '180-days':
-        nextDate = moment().add(180, 'd').toISOString();
-        break;
+        nextDate = moment().add(180, 'd').toISOString()
+        break
 
       case 'yearly':
-        nextDate = moment().add(1, 'y').toISOString();
-        break;
+        nextDate = moment().add(1, 'y').toISOString()
+        break
 
       default:
-        break;
+        break
     }
 
-    formik.setFieldValue('next_reminder_date', nextDate);
-  };
+    formik.setFieldValue('next_reminder_date', nextDate)
+  }
 
-  console.log('FORMIK VALUES:', formik.values);
+  console.log('FORMIK VALUES:', formik.values)
 
   return (
     <StyledForm>
@@ -169,8 +169,8 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
                 placeholder="Email"
                 value={formik.values.email}
                 onChange={(event) => {
-                  const formattedEmail = event.target.value.toLowerCase();
-                  formik.setFieldValue('email', formattedEmail);
+                  const formattedEmail = event.target.value.toLowerCase()
+                  formik.setFieldValue('email', formattedEmail)
                 }}
                 onBlur={formik.handleBlur}
               />
@@ -243,8 +243,8 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
                   placeholder="Next Reminder Date"
                   name="next_reminder_date"
                   onChange={(date) => {
-                    const isoDate = date?.toISOString();
-                    formik.setFieldValue('next_reminder_date', isoDate);
+                    const isoDate = date?.toISOString()
+                    formik.setFieldValue('next_reminder_date', isoDate)
                   }}
                 />
               </Space>
@@ -304,7 +304,7 @@ const ConnectForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =>
         </FormItem>
       </Form>
     </StyledForm>
-  );
-};
+  )
+}
 
-export default ConnectForm;
+export default ConnectForm

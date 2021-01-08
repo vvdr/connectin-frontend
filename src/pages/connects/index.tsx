@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-import ConnectsComp from 'components/connects';
-import Head from 'next/head';
-import MainLayout from 'components/common/layout';
-import PageWithLayoutType from 'types/page-with-layout';
-import { NextPage, NextPageContext, GetServerSideProps } from 'next';
-import { axiosGetWithCtx } from 'utils/helpers';
-import ProtectedPage from 'components/common/protected-route';
+import ConnectsComp from 'components/connects'
+import Head from 'next/head'
+import MainLayout from 'components/common/layout'
+import PageWithLayoutType from 'types/page-with-layout'
+import { NextPage, NextPageContext, GetServerSideProps } from 'next'
+import { axiosGetWithCtx } from 'utils/helpers'
+import ProtectedPage from 'components/common/protected-route'
 
 const ConnectsPage: NextPage = () => (
   <ProtectedPage>
@@ -29,6 +29,6 @@ const ConnectsPage: NextPage = () => (
 //   return { props: { connects } };
 // };
 
-(ConnectsPage as PageWithLayoutType).layout = MainLayout;
+(ConnectsPage as PageWithLayoutType).layout = MainLayout
 
-export default ConnectsPage;
+export default ConnectsPage

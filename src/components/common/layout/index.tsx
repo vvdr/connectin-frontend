@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import Navbar from 'components/common/navbar';
-import Footer from 'components/common/footer';
-import BaseLayout from './base-layout';
+import Navbar from 'components/common/navbar'
+import Footer from 'components/common/footer'
+import BaseLayout from './base-layout'
 
 const Layout: React.FC = ({ children }) => (
   <BaseLayout>
@@ -11,6 +11,6 @@ const Layout: React.FC = ({ children }) => (
     </main>
     <Footer />
   </BaseLayout>
-);
+)
 
-export default Layout;
+export default Layout

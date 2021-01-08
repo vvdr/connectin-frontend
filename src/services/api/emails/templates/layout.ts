@@ -63,4 +63,4 @@ export const MainLayout = (content: string): string => `
 					
 </tbody>
 </table>
-`;
+`

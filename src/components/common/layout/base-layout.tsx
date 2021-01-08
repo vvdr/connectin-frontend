@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ReactNode } from 'react'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
   main{
     min-height: 80vh;
   }
-`;
+`
 
 const theme = {
   colors: {
@@ -45,7 +45,7 @@ const theme = {
   up: (breakpoint: string, vertical: boolean = false) => `@media (min-${vertical ? 'height' : 'width'}: calc(${breakpoint} + 0.02px))`,
   down: (breakpoint:string, vertical: boolean = false) => `@media (max-${vertical ? 'height' : 'width'}: ${breakpoint})`,
   between: (breakpointMin: string, breakpointMax: string, vertical: boolean = false) => `@media (max-${vertical ? 'height' : 'width'}: ${breakpointMax}) and (min-${vertical ? 'height' : 'width'}: calc(${breakpointMin} + 0.02px))`,
-};
+}
 
 type IProps = {
   children: ReactNode
@@ -56,6 +56,6 @@ const BaseLayout = ({ children }: IProps) => (
     <GlobalStyles />
     <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </>
-);
+)
 
-export default BaseLayout;
+export default BaseLayout

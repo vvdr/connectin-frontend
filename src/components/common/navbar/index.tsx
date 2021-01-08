@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   Drawer, Button, Row, Col,
-} from 'antd';
-import LeftMenu from 'components/common/navbar/left-menu';
-import RightMenu from 'components/common/navbar/right-menu';
-import styled from 'styled-components';
-import Link from 'next/link';
+} from 'antd'
+import LeftMenu from 'components/common/navbar/left-menu'
+import RightMenu from 'components/common/navbar/right-menu'
+import styled from 'styled-components'
+import Link from 'next/link'
 
 const StyledNavbar = styled.nav(({ theme: { colors } }) => `
   & .logo {
@@ -140,18 +140,18 @@ const StyledNavbar = styled.nav(({ theme: { colors } }) => `
       padding: 10px 20px;
     }
   }
-`);
+`)
 
 const Navbar = () => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
   const showDrawer = () => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
 
   const onClose = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   return (
     <StyledNavbar>
@@ -189,7 +189,7 @@ const Navbar = () => {
       </Row>
 
     </StyledNavbar>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

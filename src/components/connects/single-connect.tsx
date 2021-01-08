@@ -1,51 +1,51 @@
 /* eslint-disable react/display-name */
 import {
   Row, Col, List,
-} from 'antd';
-import { useEffect, useState } from 'react';
-import { getConnect } from 'services/connects';
-import { useRouter } from 'next/router';
-import { Connect } from 'types/connect';
-import moment from 'moment-timezone';
-import Moment from 'react-moment';
+} from 'antd'
+import { useEffect, useState } from 'react'
+import { getConnect } from 'services/connects'
+import { useRouter } from 'next/router'
+import { Connect } from 'types/connect'
+import moment from 'moment-timezone'
+import Moment from 'react-moment'
 
-const timezone = moment.tz.guess();
+const timezone = moment.tz.guess()
 
-console.log('TIMESONE ', timezone);
+console.log('TIMESONE ', timezone)
 const SingleConnectComp: React.FC = () => {
-  const [connect, setConnect] = useState<Connect>();
+  const [connect, setConnect] = useState<Connect>()
   // const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
-  const { connect_id } = router.query;
-  console.log('CONNECTION ID: ', connect_id);
+  const router = useRouter()
+  const { connect_id } = router.query
+  console.log('CONNECTION ID: ', connect_id)
 
   useEffect(() => {
     const fetchData = async () => {
       // setIsLoading(true);
 
       try {
-        const { data } = await getConnect(connect_id);
-        console.log('DATA: ', data);
+        const { data } = await getConnect(connect_id)
+        console.log('DATA: ', data)
         if (data.errors) {
-          console.log('SOMETHING WENT WRONG: ', data.errors);
+          console.log('SOMETHING WENT WRONG: ', data.errors)
         } else {
-          const connectData = data.data.connects[0];
-          console.log('CONNECT DATA;', connect);
-          setConnect(connectData);
+          const connectData = data.data.connects[0]
+          console.log('CONNECT DATA;', connect)
+          setConnect(connectData)
         }
       } catch (error) {
-        console.log('SOMETHING WENT WRONG,', error);
+        console.log('SOMETHING WENT WRONG,', error)
         // setIsError(true);
       }
 
       // setIsLoading(false);
-    };
+    }
 
     // Temporary hack to fix axios default header on nextjs direct call to server page
-    if (connect_id) { setTimeout(() => fetchData(), 500); }
+    if (connect_id) { setTimeout(() => fetchData(), 500) }
     // fetchData();
-  }, [connect_id]);
+  }, [connect_id])
 
   const {
     first_name, last_name, email, phone_number,
@@ -53,7 +53,7 @@ const SingleConnectComp: React.FC = () => {
     notes_advice_wanted,
     notes_what_is_common,
     next_reminder_date,
-  } = connect || {};
+  } = connect || {}
 
   return (
     <Row>
@@ -160,6 +160,6 @@ const SingleConnectComp: React.FC = () => {
         </List>
       </Col>
     </Row>
-  );
-};
-export default SingleConnectComp;
+  )
+}
+export default SingleConnectComp

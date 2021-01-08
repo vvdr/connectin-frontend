@@ -1,5 +1,5 @@
-import { Row, Col } from 'antd';
-import Form from './form';
+import { Row, Col } from 'antd'
+import Form from './form'
 
 const ContactComp: React.FC = () => (
   <>
@@ -10,6 +10,6 @@ const ContactComp: React.FC = () => (
       </Col>
     </Row>
   </>
-);
+)
 
-export default ContactComp;
+export default ContactComp

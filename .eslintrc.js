@@ -9,7 +9,7 @@ module.exports = {
     'airbnb',
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/eslint-recommended'
+    'plugin:@typescript-eslint/eslint-recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -18,7 +18,6 @@ module.exports = {
     },
     ecmaVersion: 12,
     sourceType: 'module',
-    project: './tsconfig.json',
   },
   plugins: [
     'react',
@@ -43,9 +42,10 @@ module.exports = {
     'import/no-unresolved': 'off',
     'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 'off',
-    'camelcase': 'off'
+    semi: ['error', 'never'],
+    camelcase: 'off',
   },
   globals: {
     React: 'writable',
   },
-};
+}

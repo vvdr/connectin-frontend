@@ -1,5 +1,5 @@
-import { Row, Col } from 'antd';
-import Form from './form';
+import { Row, Col } from 'antd'
+import Form from './form'
 
 const ForgotPasswordComp: React.FC = () => (
   <>
@@ -10,6 +10,6 @@ const ForgotPasswordComp: React.FC = () => (
       </Col>
     </Row>
   </>
-);
+)
 
-export default ForgotPasswordComp;
+export default ForgotPasswordComp

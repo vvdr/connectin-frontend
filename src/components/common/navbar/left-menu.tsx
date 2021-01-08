@@ -1,5 +1,5 @@
-import { Menu } from 'antd';
-import Link from 'next/link';
+import { Menu } from 'antd'
+import Link from 'next/link'
 
 type Iprops = {
   mode? : string;
@@ -23,10 +23,10 @@ const LeftMenu = ({ mode }:Iprops) => (
       </Link>
     </Menu.Item>
   </Menu>
-);
+)
 
 LeftMenu.defaultProps = {
   mode: 'horizontal',
-};
+}
 
-export default LeftMenu;
+export default LeftMenu

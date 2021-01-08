@@ -1,7 +1,7 @@
-import { MainLayout } from './layout';
+import { MainLayout } from './layout'
 
 export const VERIFY_USER_CONTENT = (user: any): string => {
-  const url = `/verify/${user.token}`;
+  const url = `/verify/${user.token}`
   return MainLayout(`
     <tr>
       <td align="center">
@@ -93,11 +93,11 @@ export const VERIFY_USER_CONTENT = (user: any): string => {
         </table>
       </td>
     </tr>
-  `);
-};
+  `)
+}
 
 export const RESET_USER_PASSWORD_CONTENT = (user: any): string => {
-  const url = `/reset-password/${user.token}`;
+  const url = `/reset-password/${user.token}`
   return MainLayout(`
     <tr>
       <td align="center">
@@ -168,8 +168,8 @@ export const RESET_USER_PASSWORD_CONTENT = (user: any): string => {
         </table>
       </td>
     </tr>
-  `);
-};
+  `)
+}
 
 export const UPDATE_USER_PASSWORD_CONTENT = (user: any): string => MainLayout(`
     <tr>
@@ -222,4 +222,4 @@ export const UPDATE_USER_PASSWORD_CONTENT = (user: any): string => MainLayout(`
         </table>
       </td>
     </tr>
-  `);
+  `)

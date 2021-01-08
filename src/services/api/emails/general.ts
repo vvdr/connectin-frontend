@@ -1,16 +1,16 @@
 /* eslint-disable prefer-const */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ContactFormMessage } from 'types/general';
-import { SENDGRID_SENDER_EMAIL } from 'utils/constants';
-import emailHttpService from './email-http.service';
+import { ContactFormMessage } from 'types/general'
+import { SENDGRID_SENDER_EMAIL } from 'utils/constants'
+import emailHttpService from './email-http.service'
 
-const CONTACT_EMAIL = process.env.CI_CONTACT_FORM;
+const CONTACT_EMAIL = process.env.CI_CONTACT_FORM
 
 export const sendContactFormEmail = (data: ContactFormMessage): Promise<any> => {
   const {
     first_name, last_name, email, phone, message, subject,
-  } = data;
+  } = data
 
   const body = {
     personalizations: [
@@ -44,7 +44,7 @@ export const sendContactFormEmail = (data: ContactFormMessage): Promise<any> => 
         `,
       },
     ],
-  };
+  }
 
-  return emailHttpService.post('/send', JSON.stringify(body));
-};
+  return emailHttpService.post('/send', JSON.stringify(body))
+}

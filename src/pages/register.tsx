@@ -1,7 +1,7 @@
-import RegisterComp from 'components/register';
-import Head from 'next/head';
-import MainLayout from 'components/common/layout';
-import PageWithLayoutType from 'types/page-with-layout';
+import RegisterComp from 'components/register'
+import Head from 'next/head'
+import MainLayout from 'components/common/layout'
+import PageWithLayoutType from 'types/page-with-layout'
 
 const RegisterPage:React.FC = () => (
   <div>
@@ -13,6 +13,6 @@ const RegisterPage:React.FC = () => (
   </div>
 );
 
-(RegisterPage as PageWithLayoutType).layout = MainLayout;
+(RegisterPage as PageWithLayoutType).layout = MainLayout
 
-export default RegisterPage;
+export default RegisterPage

@@ -1,6 +1,9 @@
-import { Menu } from 'antd';
-import Link from 'next/link';
-import styled from 'styled-components';
+/* eslint-disable no-use-before-define */
+import { Menu, Button } from 'antd'
+import Link from 'next/link'
+import { useContext } from 'react'
+import styled from 'styled-components'
+import { authContext } from 'utils/auth-provider'
 
 const StyledRightMenu = styled.div(({ theme: { colors } }) => `
 
@@ -9,10 +12,41 @@ const StyledRightMenu = styled.div(({ theme: { colors } }) => `
     color: ${colors.primary};
    
   }
-`);
+`)
 
-const RightMenu = () => (
-  <StyledRightMenu>
+const RightMenu = () => {
+  const { isAuthenticated } = useContext(authContext)
+
+  return (
+    <StyledRightMenu>
+      {isAuthenticated ? <SignedMenu /> : <LogoutMenu /> }
+    </StyledRightMenu>
+  )
+}
+
+function SignedMenu() {
+  const { dispatch } = useContext(authContext)
+  const handleLogout = () => {
+    console.log('LOGOUT IS CALLED')
+    dispatch({ type: 'LOGOUT_USER' })
+  }
+
+  return (
+    <Menu mode="horizontal">
+      <Menu.Item>
+        <Link href="/login">
+          <a>Login</a>
+        </Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Button onClick={handleLogout}>Logout</Button>
+      </Menu.Item>
+    </Menu>
+  )
+}
+
+function LogoutMenu() {
+  return (
     <Menu mode="horizontal">
       <Menu.Item>
         <Link href="/login">
@@ -25,7 +59,7 @@ const RightMenu = () => (
         </Link>
       </Menu.Item>
     </Menu>
-  </StyledRightMenu>
-);
+  )
+}
 
-export default RightMenu;
+export default RightMenu

@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-import axios from 'axios';
-import bcrypt from 'bcrypt';
-import { sendRegisterUserEmail } from 'services/api/emails/user';
+import axios from 'axios'
+import bcrypt from 'bcrypt'
+import { sendRegisterUserEmail } from 'services/api/emails/user'
 
-const hasuraEndpoint = `${process.env.CI_HASURA_GRAPQHL_ENDPOINT}/graphql`;
+const hasuraEndpoint = `${process.env.CI_HASURA_GRAPQHL_ENDPOINT}/graphql`
 
 type Data = {
   message: string
@@ -22,18 +22,18 @@ const SIGNUP_HASURA_OPERATION = `
       email
     }
   }
-`;
+`
 
 export default async function register(req: NextApiRequest, res : NextApiResponse<Data>) {
   if (req.method === 'POST') {
-    console.log('REGISTER BODY:', req.body);
+    console.log('REGISTER BODY:', req.body)
     try {
       const {
         first_name, last_name, email, password, company_name, phone_number,
-      } = req.body;
+      } = req.body
 
-      console.log('PASSWORD: ', password);
-      const hashedPassword = await bcrypt.hash(password, 10);
+      console.log('PASSWORD: ', password)
+      const hashedPassword = await bcrypt.hash(password, 10)
 
       const variables = {
         first_name,
@@ -43,41 +43,41 @@ export default async function register(req: NextApiRequest, res : NextApiRespons
         company_name,
         phone_number,
 
-      };
+      }
 
       const body = JSON.stringify({
         query: SIGNUP_HASURA_OPERATION,
         variables,
-      });
+      })
 
-      const { data: resData } = await axios.post(hasuraEndpoint, body);
-      const { data, errors } = resData;
+      const { data: resData } = await axios.post(hasuraEndpoint, body)
+      const { data, errors } = resData
 
-      console.log('errors: ', errors);
+      console.log('errors: ', errors)
       if (errors) {
         return res.status(400).json({
           message: errors[0].message,
           code: '400',
-        });
+        })
       }
 
       // send email
 
-      await sendRegisterUserEmail(email);
+      await sendRegisterUserEmail(email)
       // console.log('EMAIL RESULT: ', emailResult);
 
       // success
       return res.status(201).json({
         message: 'Account created successfully.',
         user: { ...data.insert_users_one },
-      });
+      })
     } catch (err) {
-      console.log('eeeeerrr+n    +++++++_', err && err.response);
+      console.log('eeeeerrr+n    +++++++_', err && err.response)
       return res.status(400).json({
         message: err.message,
-      });
+      })
     }
   } else {
-    return res.status(405).json({ message: 'We only support POST' });
+    return res.status(405).json({ message: 'We only support POST' })
   }
 }

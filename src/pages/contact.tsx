@@ -1,7 +1,7 @@
-import ContactComp from 'components/contact';
-import Head from 'next/head';
-import MainLayout from 'components/common/layout';
-import PageWithLayoutType from 'types/page-with-layout';
+import ContactComp from 'components/contact'
+import Head from 'next/head'
+import MainLayout from 'components/common/layout'
+import PageWithLayoutType from 'types/page-with-layout'
 
 const ContactPage: React.FC = () => (
   <div>
@@ -13,6 +13,6 @@ const ContactPage: React.FC = () => (
   </div>
 );
 
-(ContactPage as PageWithLayoutType).layout = MainLayout;
+(ContactPage as PageWithLayoutType).layout = MainLayout
 
-export default ContactPage;
+export default ContactPage

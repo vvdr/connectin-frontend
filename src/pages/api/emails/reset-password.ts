@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable consistent-return */
-import { NextApiRequest, NextApiResponse } from 'next';
-import { sendResetPasswordEmail } from 'services/api/emails/user';
-import { getUserWithEmail } from 'services/api/user';
+import { NextApiRequest, NextApiResponse } from 'next'
+import { sendResetPasswordEmail } from 'services/api/emails/user'
+import { getUserWithEmail } from 'services/api/user'
 
 type Data = {
   message: string
@@ -14,30 +14,30 @@ export default async function sendResetPasswordEmailAPI(req: NextApiRequest, res
     try {
       const {
         email,
-      } = req.body;
+      } = req.body
 
-      if (!email) res.status(400).json({ message: 'Email is required' });
+      if (!email) res.status(400).json({ message: 'Email is required' })
 
-      const { data: userData } = await getUserWithEmail(email);
+      const { data: userData } = await getUserWithEmail(email)
 
-      const { data, errors } = userData;
-      console.log('USER DATA +', data, errors);
+      const { data, errors } = userData
+      console.log('USER DATA +', data, errors)
       if (data.users.length) {
-        console.log('USER EXITS: ');
-        await sendResetPasswordEmail(email); // send email
+        console.log('USER EXITS: ')
+        await sendResetPasswordEmail(email) // send email
       } else {
-        console.log('USER DOESNOT  EXITS: ');
+        console.log('USER DOESNOT  EXITS: ')
       }
 
-      res.send({ message: 'Email sent successfully if your account exits.' });
+      res.send({ message: 'Email sent successfully if your account exits.' })
     } catch (err) {
-      console.log('eeeeerrr+n    +++++++_', err && err.response);
+      console.log('eeeeerrr+n    +++++++_', err && err.response)
 
       return res.status(400).json({
         message: err.message,
-      });
+      })
     }
   } else {
-    return res.status(405).json({ message: 'We only support POST' });
+    return res.status(405).json({ message: 'We only support POST' })
   }
 }

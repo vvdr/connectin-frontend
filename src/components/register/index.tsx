@@ -1,5 +1,5 @@
-import { Row, Col } from 'antd';
-import Form from './form';
+import { Row, Col } from 'antd'
+import Form from './form'
 
 const RegisterComp: React.FC = () => (
   <>
@@ -10,6 +10,6 @@ const RegisterComp: React.FC = () => (
       </Col>
     </Row>
   </>
-);
+)
 
-export default RegisterComp;
+export default RegisterComp

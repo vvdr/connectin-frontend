@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from 'axios'
 
-const hasuraEndpoint = `${process.env.CI_HASURA_GRAPQHL_ENDPOINT}/graphql`;
+const hasuraEndpoint = `${process.env.CI_HASURA_GRAPQHL_ENDPOINT}/graphql`
 
 const GET_USER_WITH_EMAIL_OPERATION = `
   query($email: String!) {
@@ -12,17 +12,17 @@ const GET_USER_WITH_EMAIL_OPERATION = `
       password
     }
   }
-`;
+`
 
 export const getUserWithEmail = async (email: string) => {
   const variables = {
     email,
-  };
+  }
 
   const body = JSON.stringify({
     query: GET_USER_WITH_EMAIL_OPERATION,
     variables,
-  });
+  })
 
-  return axios.post(hasuraEndpoint, body);
-};
+  return axios.post(hasuraEndpoint, body)
+}

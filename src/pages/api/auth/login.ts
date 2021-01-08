@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
-import type { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { Auth } from 'types/auth';
-import { getUserWithEmail } from 'services/api/user';
+import type { NextApiRequest, NextApiResponse } from 'next'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { Auth } from 'types/auth'
+import { getUserWithEmail } from 'services/api/user'
 
-const jwtKey = process.env.CI_JWT_SECRET_KEY || '';
+const jwtKey = process.env.CI_JWT_SECRET_KEY || ''
 
 type Data = {
   message: string
@@ -18,28 +18,28 @@ export default async function login(req: NextApiRequest, res : NextApiResponse<D
     try {
       const {
         email, password,
-      } = req.body;
+      } = req.body
 
-      const { data: resData } = await getUserWithEmail(email);
+      const { data: resData } = await getUserWithEmail(email)
 
-      const { data, errors } = resData;
+      const { data, errors } = resData
 
       if (errors) {
         return res.status(400).json({
           message: errors[0].message,
           code: 400,
-        });
+        })
       }
 
-      console.log('USER +++++++++++', data.users);
+      console.log('USER +++++++++++', data.users)
 
       if (data.users.length) {
-        const user = data.users[0];
+        const user = data.users[0]
 
         // Compare password:
 
-        const validPassword = await bcrypt.compare(password, user.password);
-        if (!validPassword) return res.status(400).json({ message: 'Invalid email or password' });
+        const validPassword = await bcrypt.compare(password, user.password)
+        if (!validPassword) return res.status(400).json({ message: 'Invalid email or password' })
 
         const tokenContents = {
           sub: user.user_id.toString(),
@@ -53,9 +53,9 @@ export default async function login(req: NextApiRequest, res : NextApiResponse<D
             'x-hasura-default-role': 'user',
             'x-hasura-role': 'user',
           },
-        };
+        }
 
-        const token = jwt.sign(tokenContents, jwtKey, { expiresIn: '1h' });
+        const token = jwt.sign(tokenContents, jwtKey, { expiresIn: '1h' })
 
         const auth: Auth = {
           token,
@@ -65,7 +65,7 @@ export default async function login(req: NextApiRequest, res : NextApiResponse<D
             last_name: user.last_name,
             email: user.email,
           },
-        };
+        }
         // res.setHeader('Set-Cookie', cookie.serialize('auth', JSON.stringify(auth), {
         //   httpOnly: false,
         //   secure: process.env.NODE_ENV !== 'development',
@@ -78,20 +78,20 @@ export default async function login(req: NextApiRequest, res : NextApiResponse<D
         return res.json({
           message: 'User Logged in successfully.',
           auth,
-        });
+        })
       }
 
       return res.status(400).json({
         message: 'Invalid Email or password.',
-      });
+      })
     } catch (err) {
-      console.log('eeeeerrr+n    +++++++_', err && err.response);
+      console.log('eeeeerrr+n    +++++++_', err && err.response)
 
       return res.status(400).json({
         message: err.message,
-      });
+      })
     }
   } else {
-    return res.status(405).json({ message: 'We only support POST' });
+    return res.status(405).json({ message: 'We only support POST' })
   }
 }

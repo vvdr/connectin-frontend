@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import type { AppProps } from 'next/app';
-import 'antd/dist/antd.css';
-import PageWithLayoutType from 'types/page-with-layout';
-import Head from 'next/head';
-import { AuthProvider } from '../utils/auth-provider';
+import type { AppProps } from 'next/app'
+import 'antd/dist/antd.css'
+import PageWithLayoutType from 'types/page-with-layout'
+import Head from 'next/head'
+import { AuthProvider } from '../utils/auth-provider'
 
 type AppLayoutProps = AppProps & {
   Component: PageWithLayoutType
@@ -11,7 +11,7 @@ type AppLayoutProps = AppProps & {
 
 function MyApp({ Component, pageProps }: AppLayoutProps) {
   const MainLayout = Component.layout
-  || ((page) => <>{page}</>);
+  || ((page) => <>{page}</>)
 
   return (
     <AuthProvider>
@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: AppLayoutProps) {
         <Component {...pageProps} />
       </MainLayout>
     </AuthProvider>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp

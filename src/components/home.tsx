@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 const HomeComp: React.FC = () => (
   <>
@@ -16,6 +16,6 @@ const HomeComp: React.FC = () => (
       <a>Add New Connect</a>
     </Link>
   </>
-);
+)
 
-export default HomeComp;
+export default HomeComp

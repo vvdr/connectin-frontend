@@ -1,15 +1,15 @@
-import LoginComp from 'components/login';
-import Head from 'next/head';
-import MainLayout from 'components/common/layout';
-import PageWithLayoutType from 'types/page-with-layout';
-import { useContext, useEffect } from 'react';
-import { authContext, ContextProps } from 'utils/auth-provider';
+import LoginComp from 'components/login'
+import Head from 'next/head'
+import MainLayout from 'components/common/layout'
+import PageWithLayoutType from 'types/page-with-layout'
+import { useContext, useEffect } from 'react'
+import { authContext, ContextProps } from 'utils/auth-provider'
 
 const LoginPage: React.FC = () => {
-  const auth = useContext<ContextProps>(authContext);
+  const auth = useContext<ContextProps>(authContext)
   useEffect(() => {
-    auth.dispatch({ type: 'LOGOUT_USER' });
-  }, []);
+    auth.dispatch({ type: 'LOGOUT_USER' })
+  }, [])
   return (
     <div>
       <Head>
@@ -18,9 +18,9 @@ const LoginPage: React.FC = () => {
       </Head>
       <LoginComp />
     </div>
-  );
+  )
 };
 
-(LoginPage as PageWithLayoutType).layout = MainLayout;
+(LoginPage as PageWithLayoutType).layout = MainLayout
 
-export default LoginPage;
+export default LoginPage

@@ -3,33 +3,33 @@
 /* eslint-disable react/display-name */
 import {
   Table, Space, Row, Col,
-} from 'antd';
-import { useEffect, useState } from 'react';
-import { getConnects, deleteConnect } from 'services/connects';
-import Link from 'next/link';
-import { Connect } from 'types/connect';
+} from 'antd'
+import { useEffect, useState } from 'react'
+import { getConnects, deleteConnect } from 'services/connects'
+import Link from 'next/link'
+import { Connect } from 'types/connect'
 
 const ConnectsComp: React.FC = () => {
-  const [connects, setConnects] = useState<Connect[]>([]);
+  const [connects, setConnects] = useState<Connect[]>([])
   // const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async (connectId: string) => {
-    console.log('HANDLE DELETE,', connectId);
+    console.log('HANDLE DELETE,', connectId)
     try {
-      const { data } = await deleteConnect(connectId);
-      console.log('DATA: ', data);
+      const { data } = await deleteConnect(connectId)
+      console.log('DATA: ', data)
       if (data.errors) {
-        console.log('SOMETHING WENT WRONG: ', data.errors);
+        console.log('SOMETHING WENT WRONG: ', data.errors)
       } else {
-        const updatedConnects = connects.filter((item) => item.connect_id !== connectId);
-        setConnects(updatedConnects);
+        const updatedConnects = connects.filter((item) => item.connect_id !== connectId)
+        setConnects(updatedConnects)
         // setConnects(data.data.connects);
       }
     } catch (error) {
-      console.log('SOMETHING WENT WRONG,', error);
+      console.log('SOMETHING WENT WRONG,', error)
       // setIsError(true);
     }
-  };
+  }
 
   const columns = [
     {
@@ -67,32 +67,32 @@ const ConnectsComp: React.FC = () => {
         </Space>
       ),
     },
-  ];
+  ]
 
   useEffect(() => {
     const fetchData = async () => {
       // setIsLoading(true);
 
       try {
-        const { data } = await getConnects();
-        console.log('DATA: ', data);
+        const { data } = await getConnects()
+        console.log('DATA: ', data)
         if (data.errors) {
-          console.log('SOMETHING WENT WRONG: ', data.errors);
+          console.log('SOMETHING WENT WRONG: ', data.errors)
         } else {
-          setConnects(data.data.connects);
+          setConnects(data.data.connects)
         }
       } catch (error) {
-        console.log('SOMETHING WENT WRONG,', error);
+        console.log('SOMETHING WENT WRONG,', error)
         // setIsError(true);
       }
 
       // setIsLoading(false);
-    };
+    }
 
     // Temporary hack to fix axios default header on nextjs direct call to server page
-    setTimeout(() => fetchData(), 100);
+    setTimeout(() => fetchData(), 100)
     // fetchData();
-  }, []);
+  }, [])
 
   return (
     <Row>
@@ -105,7 +105,7 @@ const ConnectsComp: React.FC = () => {
         <Table rowKey="connect_id" columns={columns} dataSource={connects} />
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default ConnectsComp;
+export default ConnectsComp

@@ -1,11 +1,11 @@
-import { Connect } from 'types/connect';
-import httpService from './http-service';
+import { Connect } from 'types/connect'
+import httpService from './http-service'
 
 const axiosConfig = {
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
   },
-};
+}
 
 const INSERT_CONNECTS_ONE = `
   mutation (
@@ -40,7 +40,7 @@ const INSERT_CONNECTS_ONE = `
       last_name
     }
   }
-`;
+`
 
 const UPDATE_CONNECT = `
   mutation (
@@ -74,7 +74,7 @@ const UPDATE_CONNECT = `
       affected_rows
     }
   }
-`;
+`
 
 const GET_CONNECTS = `
   query {
@@ -92,7 +92,7 @@ const GET_CONNECTS = `
       next_reminder_date
     }
   }
-`;
+`
 
 const GET_CONNECT = `
   query GetCoonect($connect_id: uuid) {
@@ -110,51 +110,51 @@ const GET_CONNECT = `
       next_reminder_date
     }
   }
-`;
+`
 
 const DELTE_CONNECT = `mutation DeleteConnect($connect_id: uuid!) {
   delete_connects(where: {connect_id: {_eq: $connect_id}}) {
     affected_rows
   }
-}`;
+}`
 
 export const createConnect = (variables : Connect) => {
   const body = JSON.stringify({
     query: INSERT_CONNECTS_ONE,
     variables,
-  });
+  })
 
-  return httpService.post('/graphql', body, axiosConfig);
-};
+  return httpService.post('/graphql', body, axiosConfig)
+}
 
 export const updateConnect = (variables : Connect) => {
   const body = JSON.stringify({
     query: UPDATE_CONNECT,
     variables,
-  });
+  })
 
-  return httpService.post('/graphql', body, axiosConfig);
-};
+  return httpService.post('/graphql', body, axiosConfig)
+}
 
 export const getConnects = () => {
   const body = JSON.stringify({
     query: GET_CONNECTS,
-  });
+  })
 
-  return httpService.post('/graphql', body, axiosConfig);
-};
+  return httpService.post('/graphql', body, axiosConfig)
+}
 
 export const getConnect = (connect_id: any) => {
-  console.log('INSIDE GET CONNECTION', connect_id);
+  console.log('INSIDE GET CONNECTION', connect_id)
   const body = JSON.stringify({
     query: GET_CONNECT,
     variables: {
       connect_id,
     },
-  });
+  })
 
-  return httpService.post('/graphql', body, axiosConfig);
-};
+  return httpService.post('/graphql', body, axiosConfig)
+}
 
 export const deleteConnect = (connect_id: any) => {
   const body = JSON.stringify({
@@ -162,7 +162,7 @@ export const deleteConnect = (connect_id: any) => {
     variables: {
       connect_id,
     },
-  });
+  })
 
-  return httpService.post('/graphql', body, axiosConfig);
-};
+  return httpService.post('/graphql', body, axiosConfig)
+}

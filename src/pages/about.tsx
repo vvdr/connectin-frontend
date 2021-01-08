@@ -1,7 +1,7 @@
-import AboutComp from 'components/about';
-import Head from 'next/head';
-import MainLayout from 'components/common/layout';
-import PageWithLayoutType from 'types/page-with-layout';
+import AboutComp from 'components/about'
+import Head from 'next/head'
+import MainLayout from 'components/common/layout'
+import PageWithLayoutType from 'types/page-with-layout'
 
 const AboutPage: React.FC = () => (
   <div>
@@ -13,6 +13,6 @@ const AboutPage: React.FC = () => (
   </div>
 );
 
-(AboutPage as PageWithLayoutType).layout = MainLayout;
+(AboutPage as PageWithLayoutType).layout = MainLayout
 
-export default AboutPage;
+export default AboutPage
