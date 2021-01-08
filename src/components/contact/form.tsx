@@ -64,7 +64,7 @@ const FormItem = Form.Item;
 const RegisterForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, onSubmitProps: any) => {
     setLoading(true);
 
     try {
@@ -72,6 +72,7 @@ const RegisterForm: React.FC = () => {
       console.log('Data: ', data);
       message.success(data.message);
       setLoading(false);
+      onSubmitProps.resetForm();
     } catch (error) {
       console.log('SOMETHING WENT WRONG:', error && error.response);
       message.error('Something went wrong.');
