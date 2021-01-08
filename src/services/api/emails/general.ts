@@ -9,7 +9,7 @@ const CONTACT_EMAIL = process.env.CI_CONTACT_FORM
 
 export const sendContactFormEmail = (data: ContactFormMessage): Promise<any> => {
   const {
-    first_name, last_name, email, phone, message, subject,
+    first_name, last_name, email, phone_number, message, subject,
   } = data
 
   const body = {
@@ -39,7 +39,7 @@ export const sendContactFormEmail = (data: ContactFormMessage): Promise<any> => 
             <b>Last Name: </b>  ${last_name}<br/>
             <b>Email Name: </b>  ${email}<br/>
             <b>Subject: </b>  ${subject}<br/>
-            <b>Phone: </b>  ${phone}<br/>
+            <b>Phone: </b>  ${phone_number}<br/>
             <b>Message: </b>  ${message}<br/>
         `,
       },

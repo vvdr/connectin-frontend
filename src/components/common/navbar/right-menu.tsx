@@ -10,7 +10,6 @@ const StyledRightMenu = styled.div(({ theme: { colors } }) => `
   & .phone a{
     font-size: 24px; 
     color: ${colors.primary};
-   
   }
 `)
 
