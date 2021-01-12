@@ -3,7 +3,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { sendResetPasswordEmail } from 'services/api/emails/user'
 import { getUserWithEmail } from 'services/api/user'
+import jwt from 'jsonwebtoken'
 
+const jwtKey = process.env.CI_JWT_SECRET_KEY || ''
 type Data = {
   message: string
   code?: string | number,
@@ -12,11 +14,12 @@ type Data = {
 export default async function sendResetPasswordEmailAPI(req: NextApiRequest, res : NextApiResponse<Data>) {
   if (req.method === 'POST') {
     try {
+      console.log('Req body, ', req.body)
       const {
         email,
       } = req.body
 
-      if (!email) res.status(400).json({ message: 'Email is required' })
+      if (!email) return res.status(400).json({ message: 'Email is required' })
 
       const { data: userData } = await getUserWithEmail(email)
 
@@ -24,7 +27,16 @@ export default async function sendResetPasswordEmailAPI(req: NextApiRequest, res
       console.log('USER DATA +', data, errors)
       if (data.users.length) {
         console.log('USER EXITS: ')
-        await sendResetPasswordEmail(email) // send email
+
+        // Generate Token;
+
+        const tokenContents = {
+          email,
+          iat: Date.now() / 1000,
+        }
+        const token = jwt.sign(tokenContents, jwtKey, { expiresIn: '1h' })
+
+        await sendResetPasswordEmail(email, token) // send email
       } else {
         console.log('USER DOESNOT  EXITS: ')
       }

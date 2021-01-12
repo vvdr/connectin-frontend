@@ -9,6 +9,8 @@ import emailHttpService from './email-http.service'
 //   VERIFY_USER_CONTENT,
 // } from './templates/user';
 
+const baseUrl = process.env.CI_BASE_URL
+
 export const sendRegisterUserEmail = (email: string): Promise<any> => {
   const body = {
     personalizations: [
@@ -35,11 +37,8 @@ export const sendRegisterUserEmail = (email: string): Promise<any> => {
   return emailHttpService.post('/send', JSON.stringify(body))
 }
 
-export const sendResetPasswordEmail = (email:string): Promise<any> => {
-//   console.log('RESET PASSWORD EMAIL', email);
-//   const content = RESET_USER_PASSWORD_CONTENT({ token: 'sometoken', fullName: 'full Name' });
-
-  // console.log('CONENT: ++++++++++++++', content);
+export const sendResetPasswordEmail = (email:string, token: string): Promise<any> => {
+  const url = `${baseUrl}/reset-password/${token}`
   const body = {
     personalizations: [
       {
@@ -48,7 +47,7 @@ export const sendResetPasswordEmail = (email:string): Promise<any> => {
             email,
           },
         ],
-        subject: 'Reset Password - Connectin :)',
+        subject: 'Reset Password - Connectin App',
       },
     ],
     from: {
@@ -58,7 +57,7 @@ export const sendResetPasswordEmail = (email:string): Promise<any> => {
     content: [
       {
         type: 'text/html',
-        value: `Rest passowrd:  <b>${'Click Here'}</b>, you just sent an email.`,
+        value: `You requested to reset the password:  <b><a  href="${url}">Reset Password</a</b>.`,
       },
     ],
   }

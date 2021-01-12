@@ -8,7 +8,7 @@ const axiosConfig = {
 }
 
 export const sendResetPasswordEmail = (email: string) => {
-  const body = JSON.stringify(email)
+  const body = JSON.stringify({ email })
   return httpService.post('/api/emails/reset-password', body, axiosConfig)
 }
 

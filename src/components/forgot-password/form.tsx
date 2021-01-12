@@ -5,10 +5,9 @@ import {
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import styled from 'styled-components'
-// import { useContext, useState } from 'react';
 import { useState } from 'react'
 
-// import { login } from 'services/auth';
+import { sendResetPasswordEmail } from 'services/emails'
 // import Router from 'next/router';
 import Link from 'next/link'
 
@@ -51,26 +50,19 @@ const FormItem = Form.Item
 
 const ForgotPasswordForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  // const auth = useContext<ContextProps>(authContext);
 
   const handleSubmit = async (values: any) => {
-    console.log('handle submit', values)
+    console.log('handle submit ++++', values)
     setLoading(true)
     try {
-      // const { data } = await login(values);
-      // console.log('Data: ', data);
-      message.success('Password resent email has been sent.')
-
-      // message.success(data.message);
+      const { data } = await sendResetPasswordEmail(values.email)
+      message.success(data.message)
       setLoading(false)
-      // auth.dispatch({ type: 'LOGIN_USER', auth: data.auth });
-      // Router.replace('/');
     } catch (error) {
       console.log('SOMETHING WENT WRONG:', error && error.response)
-      message.error(error.response.data.message)
+      message.error(error?.response?.data?.message)
       setLoading(false)
     }
-    console.log('Formik Values,', JSON.stringify(values, null, 2))
   }
 
   const formik = useFormik({
