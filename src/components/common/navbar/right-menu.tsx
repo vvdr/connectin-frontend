@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { authContext } from 'utils/auth-provider'
+import { useRouter } from 'next/router'
 
 const StyledRightMenu = styled.div(({ theme: { colors } }) => `
   
@@ -35,10 +36,12 @@ const RightMenu = () => {
 }
 
 function SignedMenu() {
+  const router = useRouter()
   const { dispatch, auth: { data } } = useContext(authContext)
+
   const handleLogout = () => {
-    console.log('LOGOUT IS CALLED')
     dispatch({ type: 'LOGOUT_USER' })
+    router.push('/')
   }
 
   return (
