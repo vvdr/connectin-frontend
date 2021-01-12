@@ -34,16 +34,21 @@ const StyledForm = styled.div(
 `,
 )
 
-const emailNotLongEnough = 'Email must be at least 3 characters'
-const invalidEmail = 'Email must be a valid email'
+const passwordNotLongEnough = (length = 3) => `password must be at least ${length} characters`
+const requiredField = (fieldName: string) => `${fieldName} is required.`
 
 const validationSchema = yup.object().shape({
-  email: yup
+  password: yup
     .string()
-    .min(3, emailNotLongEnough)
+    .min(8, passwordNotLongEnough(8))
     .max(255)
-    .email(invalidEmail)
-    .required(),
+    .required(requiredField('Password')),
+  confirm_password: yup
+    .string()
+    .min(8, passwordNotLongEnough(8))
+    .max(255)
+    .required(requiredField('Confirm Password'))
+    .oneOf([yup.ref('password'), ''], 'Passwords must match'),
 })
 
 const FormItem = Form.Item
@@ -68,7 +73,7 @@ const ForgotPasswordForm: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       password: '',
-
+      confirm_password: '',
     },
     validationSchema,
     onSubmit: handleSubmit,
@@ -83,21 +88,33 @@ const ForgotPasswordForm: React.FC = () => {
           onFinish={formik.handleSubmit}
         >
           <FormItem
-            help={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
-            validateStatus={formik.touched.email && formik.errors.email ? 'error' : undefined}
-            label="Email / Username"
+            label="Password"
+            help={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
+            validateStatus={formik.touched.password && formik.errors.password ? 'error' : undefined}
           >
-            <Input
-              name="email"
-              placeholder="Email / Username"
-              value={formik.values.email}
-              onChange={(event) => {
-                const formattedEmail = event.target.value.toLowerCase()
-                formik.setFieldValue('email', formattedEmail)
-              }}
+            <Input.Password
+              name="password"
+              placeholder="Password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
           </FormItem>
+
+          <FormItem
+            label="Confirm Password"
+            help={(formik.touched.confirm_password || formik.touched.password) && formik.errors.confirm_password ? formik.errors.confirm_password : ''}
+            validateStatus={(formik.touched.confirm_password || formik.touched.password) && formik.errors.confirm_password ? 'error' : undefined}
+          >
+            <Input.Password
+              name="confirm_password"
+              placeholder="Confirm Password"
+              value={formik.values.confirm_password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </FormItem>
+
           <FormItem>
             <Button type="primary" key="submit" htmlType="submit">
               Reset
