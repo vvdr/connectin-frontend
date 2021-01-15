@@ -18,7 +18,7 @@ const ForgotPasswordPage: React.FC = ({ token, verified }:any) => {
         <title>Update Password | ConnectIn</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {verified ? <ResetPasswordComp /> : (
+      {verified ? <ResetPasswordComp token={token} /> : (
         <Row justify="center">
           <Col span={4}>
             <Alert message="Invalid token." type="error" />

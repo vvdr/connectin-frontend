@@ -1,5 +1,5 @@
 import {
-  Form, Input, Button, Spin,
+  Form, Input, Button, Spin, message,
 } from 'antd'
 
 import * as yup from 'yup'
@@ -7,8 +7,8 @@ import { useFormik } from 'formik'
 import styled from 'styled-components'
 import { useState } from 'react'
 
-// import { sendResetPasswordEmail } from 'services/emails'
-// import Router from 'next/router';
+import { sendResetPasswordEmail } from 'services/emails'
+// import Router from 'next/router'
 import Link from 'next/link'
 
 // import { authContext, ContextProps } from 'utils/auth-provider';
@@ -55,12 +55,12 @@ const ForgotPasswordForm: React.FC = () => {
     console.log('handle submit ++++', values)
     setLoading(true)
     try {
-      // const { data } = await sendResetPasswordEmail(values.email)
-      // message.success(data.message)
+      const { data } = await sendResetPasswordEmail(values.email)
+      message.success(data.message)
       setLoading(false)
     } catch (error) {
-      // console.log('SOMETHING WENT WRONG:', error && error.response)
-      // message.error(error?.response?.data?.message)
+      console.log('SOMETHING WENT WRONG:', error && error.response)
+      message.error(error?.response?.data?.message)
       setLoading(false)
     }
   }

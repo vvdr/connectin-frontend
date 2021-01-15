@@ -1,5 +1,5 @@
 import {
-  Form, Input, Button, Spin,
+  Form, Input, Button, Spin, message,
 } from 'antd'
 
 import * as yup from 'yup'
@@ -7,11 +7,9 @@ import { useFormik } from 'formik'
 import styled from 'styled-components'
 import { useState } from 'react'
 
-// import { sendResetPasswordEmail } from 'services/emails'
-// import Router from 'next/router';
+import { updateUserPassword } from 'services/emails'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
-
-// import { authContext, ContextProps } from 'utils/auth-provider';
 
 const StyledForm = styled.div(
   ({
@@ -53,19 +51,26 @@ const validationSchema = yup.object().shape({
 
 const FormItem = Form.Item
 
-const ForgotPasswordForm: React.FC = () => {
+type Props ={
+  token: string;
+}
+
+const ForgotPasswordForm: React.FC<Props> = ({ token }: Props) => {
   const [loading, setLoading] = useState<boolean>(false)
+  const router = useRouter()
 
   const handleSubmit = async (values: any) => {
     console.log('handle submit ++++', values)
     setLoading(true)
     try {
-      // const { data } = await sendResetPasswordEmail(values.email)
-      // message.success(data.message)
+      const { data } = await updateUserPassword(token, values.password)
+      message.success(data.message)
+      router.push('/login')
+
       setLoading(false)
     } catch (error) {
-      // console.log('SOMETHING WENT WRONG:', error && error.response)
-      // message.error(error?.response?.data?.message)
+      console.log('SOMETHING WENT WRONG:', error && error.response)
+      message.error(error?.response?.data?.message)
       setLoading(false)
     }
   }

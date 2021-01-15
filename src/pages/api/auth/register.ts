@@ -42,7 +42,6 @@ export default async function register(req: NextApiRequest, res : NextApiRespons
         password: hashedPassword,
         company_name,
         phone_number,
-
       }
 
       const body = JSON.stringify({

@@ -12,6 +12,11 @@ export const sendResetPasswordEmail = (email: string) => {
   return httpService.post('/api/emails/reset-password', body, axiosConfig)
 }
 
+export const updateUserPassword = (token: string, password: string) => {
+  const body = JSON.stringify({ token, password })
+  return httpService.post('/api/auth/reset-password', body, axiosConfig)
+}
+
 export const sendContactFormEmail = (data: ContactFormMessage) => {
   const body = JSON.stringify(data)
   return httpService.post('/api/emails/contact-form', body, axiosConfig)
