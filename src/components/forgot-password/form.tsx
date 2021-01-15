@@ -67,8 +67,7 @@ const ForgotPasswordForm: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      password: '',
-
+      email: '',
     },
     validationSchema,
     onSubmit: handleSubmit,
