@@ -7,18 +7,16 @@ type Props = {
 }
 
 const ProtectedPage:React.FC<Props> = ({ children }: Props) => {
-  const { auth } = useContext(authContext)
+  const { auth, isAuthenticated } = useContext(authContext)
   console.log('AUTHCONTEXT  in protected route ', auth)
 
   useEffect(() => {
-    if (!auth.token) { Router.replace('/login') }
+    if (!isAuthenticated) { Router.replace('/login') }
   }, [])
-
-  if (!auth.token) { return <h3>Loading-test</h3> }
 
   return (
     <>
-      {children}
+      {isAuthenticated ? children : null}
     </>
   )
 }

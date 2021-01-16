@@ -10,6 +10,7 @@ const LoginPage: React.FC = () => {
   useEffect(() => {
     auth.dispatch({ type: 'LOGOUT_USER' })
   }, [])
+
   return (
     <div>
       <Head>

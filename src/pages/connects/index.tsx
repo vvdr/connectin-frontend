@@ -4,7 +4,6 @@ import Head from 'next/head'
 import MainLayout from 'components/common/layout'
 import PageWithLayoutType from 'types/page-with-layout'
 import { NextPage, NextPageContext, GetServerSideProps } from 'next'
-import { axiosGetWithCtx } from 'utils/helpers'
 import ProtectedPage from 'components/common/protected-route'
 
 const ConnectsPage: NextPage = () => (
