@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import {
-  Row, Col, List,
+  Row, Col, List, Spin,
 } from 'antd'
 import { useEffect, useState } from 'react'
 import { getConnect } from 'services/connects'
@@ -14,7 +14,7 @@ const timezone = moment.tz.guess()
 console.log('TIMESONE ', timezone)
 const SingleConnectComp: React.FC = () => {
   const [connect, setConnect] = useState<Connect>()
-  // const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
   const { connect_id } = router.query
@@ -22,7 +22,7 @@ const SingleConnectComp: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // setIsLoading(true);
+      setLoading(true)
 
       try {
         const { data } = await getConnect(connect_id)
@@ -39,7 +39,7 @@ const SingleConnectComp: React.FC = () => {
         // setIsError(true);
       }
 
-      // setIsLoading(false);
+      setLoading(false)
     }
 
     // Temporary hack to fix axios default header on nextjs direct call to server page
@@ -56,110 +56,117 @@ const SingleConnectComp: React.FC = () => {
   } = connect || {}
 
   return (
-    <Row>
-      <Col md={{ span: 20, offset: 2 }}>
-        <h3>Single Connect Page</h3>
-        <List
-          itemLayout="horizontal"
-        >
-          <Row>
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="First Name"
-                  description={first_name}
-                />
-              </List.Item>
-            </Col>
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Last Name"
-                  description={last_name}
-                />
+    <Spin spinning={loading}>
+      <Row>
 
-              </List.Item>
-            </Col>
+        <Col md={{ span: 20, offset: 2 }}>
+          <h3>
+            Connect with
+            {' '}
+            {`${first_name} ${last_name}`}
+          </h3>
+          <List
+            itemLayout="horizontal"
+          >
+            <Row>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="First Name"
+                    description={first_name}
+                  />
+                </List.Item>
+              </Col>
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Email"
-                  description={email}
-                />
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Last Name"
+                    description={last_name}
+                  />
 
-              </List.Item>
-            </Col>
+                </List.Item>
+              </Col>
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Phone Number"
-                  description={phone_number}
-                />
-              </List.Item>
-            </Col>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Email"
+                    description={email}
+                  />
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Company Name"
-                  description={company_name}
-                />
-              </List.Item>
-            </Col>
+                </List.Item>
+              </Col>
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Frequency"
-                  description={frequency}
-                />
-              </List.Item>
-            </Col>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Phone Number"
+                    description={phone_number}
+                  />
+                </List.Item>
+              </Col>
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Notes About Them"
-                  description={notes_about_them}
-                />
-              </List.Item>
-            </Col>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Company Name"
+                    description={company_name}
+                  />
+                </List.Item>
+              </Col>
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Notes Advice Wanted"
-                  description={notes_advice_wanted}
-                />
-              </List.Item>
-            </Col>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Frequency"
+                    description={frequency}
+                  />
+                </List.Item>
+              </Col>
 
-            <Col span={6}>
-              <List.Item>
-                <List.Item.Meta
-                  title="Notes What is common"
-                  description={notes_what_is_common}
-                />
-              </List.Item>
-            </Col>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Notes About Them"
+                    description={notes_about_them}
+                  />
+                </List.Item>
+              </Col>
 
-            <Col span={6}>
-              {JSON.stringify(moment.utc(next_reminder_date).tz(timezone).format('dddd, MMMM Do YYYY, h:mm:ss a'))}
-              <List.Item>
-                <List.Item.Meta
-                  title="Start Date"
-                  description={<Moment date={moment.utc(next_reminder_date).tz(timezone)} format="dddd, MMMM Do YYYY, h:mm:ss a" />}
-                />
-              </List.Item>
-            </Col>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Notes Advice Wanted"
+                    description={notes_advice_wanted}
+                  />
+                </List.Item>
+              </Col>
 
-          </Row>
-        </List>
-      </Col>
-    </Row>
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    title="Notes What is common"
+                    description={notes_what_is_common}
+                  />
+                </List.Item>
+              </Col>
+
+              <Col span={6}>
+                <List.Item>
+                  <List.Item.Meta
+                    description={<Moment date={moment.utc(next_reminder_date).tz(timezone)} format="dddd, MMMM Do YYYY, h:mm:ss a" />}
+                  />
+                </List.Item>
+              </Col>
+
+            </Row>
+          </List>
+        </Col>
+
+      </Row>
+    </Spin>
   )
 }
 export default SingleConnectComp

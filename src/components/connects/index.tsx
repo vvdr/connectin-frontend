@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react'
 import { getConnects, deleteConnect } from 'services/connects'
 import Link from 'next/link'
 import { Connect } from 'types/connect'
+import moment from 'moment-timezone'
+
+const timezone = moment.tz.guess()
 
 const ConnectsComp: React.FC = () => {
   const [connects, setConnects] = useState<Connect[]>([])
@@ -51,6 +54,17 @@ const ConnectsComp: React.FC = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+    },
+    // JSON.stringify()
+    {
+      title: 'Next Reminder Date',
+      dataIndex: 'next_reminder_date',
+      key: 'next_reminder_date',
+      render: (record: any) => (
+        <>
+          {moment.utc(record.next_reminder_date).tz(timezone).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+        </>
+      ),
     },
     {
       title: 'Frequency',
