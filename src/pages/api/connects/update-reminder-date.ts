@@ -11,12 +11,13 @@ export default async function updateReminderDateAPI(
   req: NextApiRequest, res : NextApiResponse<Data>,
 ) {
   if (req.method === 'POST') {
+    console.log('BODY: ', req.body)
     try {
       const {
         connectId,
       } = req.body
 
-      if (connectId) {
+      if (!connectId) {
         return res.status(400).json({
           message: 'Connect Id not found.',
           code: 400,
@@ -26,6 +27,8 @@ export default async function updateReminderDateAPI(
       const { data: resData } = await updateReminderDate(connectId)
       const { data, errors } = resData
 
+      console.log('RESPONSE DATA:::', resData)
+
       if (errors) {
         return res.status(400).json({
           message: errors[0].message,
@@ -33,11 +36,9 @@ export default async function updateReminderDateAPI(
         })
       }
 
-      console.log('USER +++++++++++', data.users)
-
-      if (data.update_users.affected_rows === 1) {
+      if (data.update_connects_by_pk) {
         return res.json({
-          message: 'Pass has been updated successfully.',
+          message: 'Next reminder date updated successfully.',
         })
       }
 

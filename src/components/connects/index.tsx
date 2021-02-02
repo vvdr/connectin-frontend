@@ -60,9 +60,9 @@ const ConnectsComp: React.FC = () => {
       title: 'Next Reminder Date',
       dataIndex: 'next_reminder_date',
       key: 'next_reminder_date',
-      render: (record: any) => (
+      render: (next_reminder_date: any) => (
         <>
-          {moment.utc(record.next_reminder_date).tz(timezone).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+          {moment.utc(next_reminder_date).tz(timezone).format('dddd, MMMM Do YYYY, h:mm:ss a')}
         </>
       ),
     },
