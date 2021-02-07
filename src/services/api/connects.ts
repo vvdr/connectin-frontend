@@ -13,8 +13,19 @@ const GET_CONNECT_BY_PK = `
   query SingleConnect($connectId: uuid! ) {
     connects_by_pk(connect_id: $connectId){
       connect_id
-      frequency,
+      frequency
       next_reminder_date
+      email
+      first_name
+      last_name
+      company_name
+      phone_number
+
+      user{
+        first_name
+        last_name
+        email
+      }
     }  
   }
 `
@@ -28,7 +39,7 @@ const UPDATE_CONNECT_FREQUENCY_OPERATION = `
   }
 `
 
-export const updateReminderDate = async (connectId: string) => {
+export const getConnectById = (connectId: string) => {
   const variables = {
     connectId,
   }
@@ -38,7 +49,11 @@ export const updateReminderDate = async (connectId: string) => {
     variables,
   })
 
-  const { data: { data: { connects_by_pk } } } = await axios.post(hasuraEndpoint, body, axiosConfig)
+  return axios.post(hasuraEndpoint, body, axiosConfig)
+}
+
+export const updateReminderDate = async (connectId: string) => {
+  const { data: { data: { connects_by_pk } } } = await getConnectById(connectId)
 
   // console.log('DATA______', data)
   const { frequency, next_reminder_date } = connects_by_pk
