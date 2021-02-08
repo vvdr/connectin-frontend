@@ -3,9 +3,12 @@
 /* eslint-disable react/display-name */
 import {
   Table, Space, Row, Col,
+  message,
 } from 'antd'
 import { useEffect, useState } from 'react'
 import { getConnects, deleteConnect } from 'services/connects'
+import { sendConnectReminderEmail } from 'services/emails'
+
 import Link from 'next/link'
 import { Connect } from 'types/connect'
 import moment from 'moment-timezone'
@@ -31,6 +34,19 @@ const ConnectsComp: React.FC = () => {
     } catch (error) {
       console.log('SOMETHING WENT WRONG,', error)
       // setIsError(true);
+    }
+  }
+
+  const handleTest = async (connectId: string) => {
+    console.log('HANDLE TEST,', connectId)
+
+    try {
+      const { data } = await sendConnectReminderEmail(connectId)
+      console.log('HANDLE TEST - DATA: ', data)
+      message.success('Reminder email sent successfully')
+    } catch (error) {
+      console.log('SOMETHING WENT WRONG,', error)
+      message.error('Something went wrong')
     }
   }
 
@@ -78,6 +94,7 @@ const ConnectsComp: React.FC = () => {
         <Space size="middle">
           <Link href={`/connects/edit-connect/${record.connect_id}`}><a>Edit</a></Link>
           <a onClick={() => handleDelete(record.connect_id)}>Delete</a>
+          <a onClick={() => handleTest(record.connect_id)}>Test</a>
         </Space>
       ),
     },

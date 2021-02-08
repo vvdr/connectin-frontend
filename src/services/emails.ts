@@ -21,3 +21,8 @@ export const sendContactFormEmail = (data: ContactFormMessage) => {
   const body = JSON.stringify(data)
   return httpService.post('/api/emails/contact-form', body, axiosConfig)
 }
+
+export const sendConnectReminderEmail = (connectId:string) => {
+  const body = JSON.stringify({ connectId })
+  return httpService.post('/api/emails/send-connect-reminder', body, axiosConfig)
+}

@@ -11,6 +11,9 @@ export const sendConnectReminderEmail = (data:any): Promise<any> => {
           },
         ],
         subject: 'Contact Reminder - Connectin App',
+        custom_args: {
+          connect_id: data.connect_id,
+        },
       },
     ],
     from: {
