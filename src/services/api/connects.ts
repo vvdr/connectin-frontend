@@ -39,6 +39,16 @@ const UPDATE_CONNECT_FREQUENCY_OPERATION = `
   }
 `
 
+const GET_CONNECTS_OF_DAY = `
+  query getConnectsOfDay($start_time: timestamp!, $end_time: timestamp! )  {
+    connects(where: {next_reminder_date: {_gte: $start_time,
+      _lte: $end_time }}) {
+      first_name
+      connect_id
+    }
+  }
+`
+
 export const getConnectById = (connectId: string) => {
   const variables = {
     connectId,
@@ -103,4 +113,25 @@ export const updateReminderDate = async (connectId: string) => {
   })
 
   return axios.post(hasuraEndpoint, updateBody, axiosConfig)
+}
+
+export const getTodayConnects = async () => {
+  console.log('INSIDE GET TODAY CONNECTS API SERVICE')
+
+  const start_time = moment.utc().startOf('day').toISOString()
+  const end_time = moment.utc().endOf('day').toISOString()
+  const variables = {
+    start_time,
+    end_time,
+  }
+
+  const body = JSON.stringify({
+    query: GET_CONNECTS_OF_DAY,
+    variables,
+  })
+
+  const { data: { data } } = await axios.post(hasuraEndpoint, body, axiosConfig)
+
+  console.log('DATA')
+  return data.connects.map((connect: any) => (connect.connect_id))
 }
