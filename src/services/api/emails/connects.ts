@@ -1,4 +1,4 @@
-import { SENDGRID_SENDER_EMAIL } from 'utils/constants'
+import { SENDGRID_SENDER_EMAIL } from '../../../utils/constants'
 import emailHttpService from './email-http.service'
 
 export const sendConnectReminderEmail = (data:any): Promise<any> => {
