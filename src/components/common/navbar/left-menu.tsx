@@ -22,6 +22,11 @@ const LeftMenu = ({ mode }:Iprops) => (
         <a>Contact</a>
       </Link>
     </Menu.Item>
+    <Menu.Item>
+      <Link href="https://connectinapp.blogspot.com">
+        <a>Blog</a>
+      </Link>
+    </Menu.Item>
   </Menu>
 )
 
