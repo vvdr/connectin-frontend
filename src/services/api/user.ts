@@ -38,7 +38,7 @@ export const getUserWithEmail = async (email: string) => {
     variables,
   })
 
-  return axios.post(hasuraEndpoint, body)
+  return axios.post(hasuraEndpoint, body, axiosConfig)
 }
 
 export const updateUserPassword = async (email: string, password: string) => {
