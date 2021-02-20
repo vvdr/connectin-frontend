@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "ts-node --project tsconfig.server.json src/server/index.ts",
-    "dev:cron":"ts-node --project tsconfig.server.json src/server/send-connect-reminders.ts",
+    "dev:cron": "ts-node --project tsconfig.server.json src/server/send-connect-reminders.ts",
     "clean": "rm -rf .next && rm -rf dist",
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
@@ -17,6 +17,7 @@
     "lint": "eslint src/**/*.ts{,x}"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.5.0",
     "@sendgrid/mail": "^7.4.0",
     "antd": "^4.8.5",
     "axios": "^0.21.0",

@@ -1,10 +1,15 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-use-before-define */
-import { Menu, Button, Space } from 'antd'
+import {
+  Menu, Avatar, Space, Dropdown,
+} from 'antd'
 import Link from 'next/link'
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { authContext } from 'utils/auth-provider'
 import { useRouter } from 'next/router'
+import { UserOutlined } from '@ant-design/icons'
 
 const StyledRightMenu = styled.div(({ theme: { colors } }) => `
   
@@ -23,7 +28,14 @@ const StyledRightMenu = styled.div(({ theme: { colors } }) => `
     color: ${colors.primary};
   }
   
+  & .dropdown-menu-item{
+    
+  }
 `)
+
+const StyledDropdownMenu = styled(Menu)`
+  min-width: 150px;
+`
 
 const RightMenu = () => {
   const { isAuthenticated } = useContext(authContext)
@@ -44,6 +56,19 @@ function SignedMenu() {
     router.push('/')
   }
 
+  const menu = (
+    <StyledDropdownMenu>
+      <Menu.Item>
+        <Link href="/profile"><a>Profile</a></Link>
+      </Menu.Item>
+
+      <Menu.Item onClick={handleLogout}>
+        Logout
+      </Menu.Item>
+
+    </StyledDropdownMenu>
+  )
+
   return (
     <Space align="center">
       <h4>
@@ -52,7 +77,16 @@ function SignedMenu() {
         <span>{data.first_name}</span>
       </h4>
 
-      <Button onClick={handleLogout}>Logout</Button>
+      <Dropdown overlay={menu}>
+        <Avatar size={32} icon={<UserOutlined />} />
+        {/* <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+          Hover me, Click menu item
+
+          <DownOutlined />
+        </a> */}
+      </Dropdown>
+      ,
+
     </Space>
   )
 }
