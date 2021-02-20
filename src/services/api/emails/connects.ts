@@ -23,7 +23,8 @@ export const sendConnectReminderEmail = (data:any): Promise<any> => {
     content: [
       {
         type: 'text/html',
-        value: `<h3>You have a meeting with ${data.user.first_name}. It is time to schedule a meeting with ${data.user.first_name}.</h3><br/>
+        value: `<h3>Hi ${data.user.first_name}, </h3>
+            <p>It's time to schedule a meeting with <b>${data.first_name}.</b></p> 
             <b>First Name: </b>  ${data.first_name}<br/>
             <b>Last Name: </b>  ${data.last_name}<br/>
             <b>Email Name: </b>  ${data.email}<br/>
