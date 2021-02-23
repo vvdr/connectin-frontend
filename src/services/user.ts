@@ -15,6 +15,7 @@ const GET_USER = `
       company_name
       phone_number
       user_id
+      invite_code
     }
   }
 `
@@ -27,7 +28,8 @@ const UPDATE_USER = `
       last_name,
       email,
       company_name,
-      phone_number
+      phone_number,
+      invite_code
     }
   }
 `

@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react'
 import {
-  Row, Col, List,
+  Row, Col, List, Popover, Button,
 } from 'antd'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { getUser } from 'services/user'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const StyledProfile = styled.div`
   & p{
@@ -40,7 +41,7 @@ const ProfileComp: React.FC = () => {
   }, [])
 
   const {
-    first_name, last_name, email, company_name, phone_number,
+    first_name, last_name, email, company_name, phone_number, invite_code,
   } = user
 
   return (
@@ -52,22 +53,65 @@ const ProfileComp: React.FC = () => {
           </StyledHeading>
           <List
             header={<Link key="edit-button" href="/profile/edit"><a>Edit Profile</a></Link>}
-
           >
             <List.Item>
-              <List.Item.Meta title="First Name" description={first_name} />
+              <p>
+                First Name:
+                {' '}
+                {first_name}
+              </p>
+
             </List.Item>
             <List.Item>
-              <List.Item.Meta title="First Name" description={last_name} />
+              <p>
+                Last Name:
+                {' '}
+                {last_name}
+                {' '}
+              </p>
             </List.Item>
             <List.Item>
-              <List.Item.Meta title="Email" description={email} />
+              <p>
+                Email:
+                {' '}
+                {email}
+              </p>
+
             </List.Item>
             <List.Item>
-              <List.Item.Meta title="Company" description={company_name} />
+              <p>
+                Company:
+                {' '}
+                {company_name}
+              </p>
+
             </List.Item>
             <List.Item>
-              <List.Item.Meta title="Phone" description={phone_number} />
+              <p>
+                Phone:
+                {' '}
+                {phone_number}
+              </p>
+
+            </List.Item>
+            <List.Item>
+              test-
+              {' '}
+              {invite_code}
+              {invite_code && (
+              <p>
+                Invitation Code:
+                {' '}
+                {invite_code}
+
+                <CopyToClipboard text={`${process.env.NEXT_PUBLIC_BASE_URL}/register?inviteCode=${invite_code}`}>
+                  <Popover placement="rightTop" content="Copied to Clickboard " trigger="click">
+                    <Button>Copy to Clipboard</Button>
+                  </Popover>
+                </CopyToClipboard>
+              </p>
+              )}
+
             </List.Item>
           </List>
         </Col>
