@@ -11,8 +11,8 @@ const axiosConfig = {
 }
 
 const SIGNUP_HASURA_OPERATION = `
-  mutation ($email: String!, $first_name: String!, $last_name: String!, $password: String!, $company_name: String!,$phone_number: String!, $invite_code: String!) {
-    insert_users_one(object: {email: $email, first_name: $first_name, last_name: $last_name, password: $password, company_name: $company_name, phone_number: $phone_number, invite_code: $invite_code}) {
+  mutation ($email: String!, $first_name: String!, $last_name: String!, $password: String!, $company_name: String!,$phone_number: String!, $invite_code: String!, $invited_by: uuid!) {
+    insert_users_one(object: {email: $email, first_name: $first_name, last_name: $last_name, password: $password, company_name: $company_name, phone_number: $phone_number, invite_code: $invite_code, invited_by: $invited_by} ) {
       user_id,
       first_name,
       last_name,
@@ -24,7 +24,7 @@ const SIGNUP_HASURA_OPERATION = `
 
 export const registerUser = async (data: any) => {
   const {
-    first_name, last_name, email, password, company_name, phone_number,
+    first_name, last_name, email, password, company_name, phone_number, invited_by,
   } = data
 
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -38,6 +38,7 @@ export const registerUser = async (data: any) => {
     company_name,
     phone_number,
     invite_code,
+    invited_by,
   }
 
   const body = JSON.stringify({

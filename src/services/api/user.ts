@@ -20,6 +20,18 @@ const GET_USER_WITH_EMAIL_OPERATION = `
   }
 `
 
+const GET_USER_WITH_INVITE_CODE_OPERATION = `
+  query($invite_code: String!) {
+    users(where: {invite_code: {_eq: $invite_code}}) {
+      invite_code
+      first_name
+      last_name
+      user_id
+      password
+    }
+  }
+`
+
 const UPDATE_USER_PASSWORD_OPERATION = `
   mutation ($email: String!, $password: String!) {
     update_users(where: {email: {_eq: $email}}, _set: {password: $password}){
@@ -41,6 +53,18 @@ export const getUserWithEmail = async (email: string) => {
   return axios.post(hasuraEndpoint, body, axiosConfig)
 }
 
+export const getUserWithInviteCode = async (invite_code: string) => {
+  const variables = {
+    invite_code,
+  }
+
+  const body = JSON.stringify({
+    query: GET_USER_WITH_INVITE_CODE_OPERATION,
+    variables,
+  })
+
+  return axios.post(hasuraEndpoint, body, axiosConfig)
+}
 export const updateUserPassword = async (email: string, password: string) => {
   const variables = {
     email,
