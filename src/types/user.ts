@@ -7,4 +7,6 @@ export type User = {
   phone_number: string
   confirm_password?: string
   user_id?: string
+  invite_code?: string
+  invited_by?: string
 }
