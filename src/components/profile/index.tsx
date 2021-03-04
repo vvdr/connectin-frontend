@@ -105,7 +105,7 @@ const ProfileComp: React.FC = () => {
                 {invite_code}
 
                 <CopyToClipboard text={`${process.env.NEXT_PUBLIC_BASE_URL}/register?inviteCode=${invite_code}`}>
-                  <Popover placement="rightTop" content="Copied to Clickboard " trigger="click">
+                  <Popover placement="rightTop" content="Copy" trigger="click">
                     <Button>Copy to Clipboard</Button>
                   </Popover>
                 </CopyToClipboard>

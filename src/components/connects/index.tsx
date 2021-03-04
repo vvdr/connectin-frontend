@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/display-name */
@@ -94,7 +95,7 @@ const ConnectsComp: React.FC = () => {
         <Space size="middle">
           <Link href={`/connects/edit-connect/${record.connect_id}`}><a>Edit</a></Link>
           <a onClick={() => handleDelete(record.connect_id)}>Delete</a>
-          <a onClick={() => handleTest(record.connect_id)}>Test</a>
+          {/* <a onClick={() => handleTest(record.connect_id)}>Test</a> */}
         </Space>
       ),
     },
