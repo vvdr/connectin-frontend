@@ -6,7 +6,7 @@ import PageWithLayoutType from 'types/page-with-layout'
 const ContactPage: React.FC = () => (
   <div>
     <Head>
-      <title>Contact Us | RCLTransport</title>
+      <title>Contact Us | ConnectIn </title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <ContactComp />

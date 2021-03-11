@@ -7,10 +7,6 @@ import { useState } from 'react'
 import Router from 'next/router'
 import Form from './form'
 
-type Props ={
-  invitedBy : string;
-}
-
 const initialValues : User = {
   first_name: '',
   last_name: '',
@@ -19,14 +15,15 @@ const initialValues : User = {
   phone_number: '',
   company_name: '',
   confirm_password: '',
+  invite_code: '',
 }
 
-const RegisterComp: React.FC<Props> = ({ invitedBy }: Props) => {
+const RegisterComp: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const handleSubmit = async (values: User) => {
     setLoading(true)
     try {
-      const { data } = await registerUser({ ...values, invited_by: invitedBy })
+      const { data } = await registerUser({ ...values })
       console.log('Data: ', data)
       message.success(data.message)
 
@@ -34,7 +31,12 @@ const RegisterComp: React.FC<Props> = ({ invitedBy }: Props) => {
       Router.replace('/login')
     } catch (error) {
       console.log('SOMETHING WENT WRONG:', error && error.response)
-      message.error('Something went wrong.')
+      console.log('teststs', error.message)
+      console.log('teststs---', error.response.message)
+      console.log('teststs--- rest', error.response)
+      console.log('teststs--- rest')
+
+      message.error(error.response.data.message || 'Something went wrong. - ')
       setLoading(false)
     }
     console.log('Formik Values,', JSON.stringify(values, null, 2))
@@ -45,7 +47,6 @@ const RegisterComp: React.FC<Props> = ({ invitedBy }: Props) => {
       <Row>
         <Col xs={24} sm={{ span: 16, offset: 4 }}>
           <h2>Register</h2>
-          {invitedBy}
           <Spin spinning={loading}>
             <Form initialValues={initialValues} handleSubmit={handleSubmit} />
           </Spin>

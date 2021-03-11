@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { sendRegisterUserEmail } from 'services/api/emails/user'
 import { registerUser } from 'services/api/auth'
+import { getUserWithInviteCode } from 'services/api/user'
 
 type Data = {
   message: string
@@ -13,7 +14,18 @@ export default async function register(req: NextApiRequest, res : NextApiRespons
   if (req.method === 'POST') {
     console.log('REGISTER BODY:', req.body)
     try {
-      const { data: resData } = await registerUser(req.body)
+      // verify invitation
+
+      const { data: { data: { users } } } = await getUserWithInviteCode(req.body.invite_code)
+
+      if (!users.length) {
+        return res.status(400).json({
+          message: 'Invalid invitation code',
+        })
+      }
+
+      console.log('INVITER DETAILS: ', users)
+      const { data: resData } = await registerUser({ ...req.body, invited_by: users[0].user_id })
       const { data, errors } = resData
 
       console.log('errors: ', errors)

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useState } from 'react'
 import {
   Form, Input, Button, Row, Col, Spin, message,
 } from 'antd'
@@ -8,6 +9,7 @@ import { User } from 'types/user'
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import styled from 'styled-components'
+import { getUserWithInviteCode } from 'services/api/user'
 
 const StyledForm = styled.div(
   ({
@@ -49,6 +51,10 @@ const validationSchema = yup.object().shape({
     .string()
     .max(255)
     .required(requiredField('Company Name')),
+  invite_code: yup
+    .string()
+    .max(12)
+    .required(requiredField('Invite Code')),
   phone_number: yup
     .string()
     .max(255)
@@ -75,11 +81,37 @@ type Props = {
 }
 
 const RegisterForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) => {
+  const [debounceT, setDebounceT] = useState<any>(null)
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
   })
+
+  const validateInviteCode = async (inviteCode: string) => {
+    console.log('get inviter')
+    try {
+      const { data: { data: { users } } } = await getUserWithInviteCode(inviteCode)
+
+      console.log('USERS ----', users)
+      if (users.length) {
+        const invitedBy = users[0].user_id
+        console.log('INVIDED BY: ', invitedBy)
+      }
+    } catch (error) {
+      console.log('SOMETHING WENT WRONG - REGISTER PAGE ')
+    }
+  }
+
+  const handleInviteCodeChange = (event: any) => {
+    const { value } = event.target
+    console.log('HANLDE INVITE CODE', value)
+    formik.setFieldValue('invite_code', value)
+
+    if (debounceT) clearTimeout(debounceT)
+    setDebounceT(setTimeout(() => (validateInviteCode(value)), 1000))
+  }
 
   return (
     <StyledForm>
@@ -142,12 +174,29 @@ const RegisterForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =
               help={formik.touched.company_name && formik.errors.company_name ? formik.errors.company_name : ''}
               validateStatus={formik.touched.company_name && formik.errors.company_name ? 'error' : undefined}
               label="Company Name"
+
             >
               <Input
                 name="company_name"
                 placeholder="Company Name"
                 value={formik.values.company_name}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </FormItem>
+          </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
+              help={formik.touched.invite_code && formik.errors.invite_code ? formik.errors.invite_code : ''}
+              validateStatus={formik.touched.invite_code && formik.errors.invite_code ? 'error' : undefined}
+              label="Invitation Code"
+            >
+              <Input
+                name="invite_code"
+                placeholder="Invitation Code"
+                value={formik.values.invite_code}
+                onChange={formik.handleChange}
+                onChangeCapture={handleInviteCodeChange}
                 onBlur={formik.handleBlur}
               />
             </FormItem>
