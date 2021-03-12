@@ -1,9 +1,3 @@
-type Address ={
-  city: string
-  state: string
-  country: string
-}
-
 export type User = {
   first_name: string
   last_name: string
@@ -18,6 +12,7 @@ export type User = {
   gender?:string
   birth_year?: number
   race?: string
-  address_id?: string
-  address?: Address
+  city?: string
+  state?: string
+  country?: string
 }

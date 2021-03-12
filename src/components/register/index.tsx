@@ -16,6 +16,12 @@ const initialValues : User = {
   company_name: '',
   confirm_password: '',
   invite_code: '',
+  gender: '',
+  birth_year: undefined,
+  race: '',
+  city: '',
+  state: '',
+  country: '',
 }
 
 const RegisterComp: React.FC = () => {

@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import {
-  Form, Input, Button, Row, Col, Spin, message,
+  Form, Input, Button, Row, Col, Select,
 } from 'antd'
-
 import { User } from 'types/user'
 
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import styled from 'styled-components'
 import { getUserWithInviteCode } from 'services/api/user'
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector'
+import countriesData from 'country-region-data'
+
+const { Option } = Select
 
 const StyledForm = styled.div(
   ({
@@ -51,6 +54,16 @@ const validationSchema = yup.object().shape({
     .string()
     .max(255)
     .required(requiredField('Company Name')),
+  gender: yup
+    .string()
+    .required(requiredField('Gender')),
+  birth_year: yup
+    .number()
+    .required(requiredField('Birth Year')),
+  race: yup
+    .string()
+    .max(255)
+    .required(requiredField('Race')),
   invite_code: yup
     .string()
     .max(12)
@@ -59,6 +72,11 @@ const validationSchema = yup.object().shape({
     .string()
     .max(255)
     .required(requiredField('Phone Number')),
+
+  city: yup.string().required(requiredField('City')),
+  state: yup.string().required(requiredField('State')),
+  country: yup.string().required(requiredField('Country')),
+
   password: yup
     .string()
     .min(8, passwordNotLongEnough(8))
@@ -113,6 +131,8 @@ const RegisterForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =
     setDebounceT(setTimeout(() => (validateInviteCode(value)), 1000))
   }
 
+  console.log('SDFSADFDSF', countriesData)
+  // console.log('RAW DATA - ', CountryRegionData)
   return (
     <StyledForm>
       <Form
@@ -187,6 +207,70 @@ const RegisterForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =
           </Col>
           <Col xs={24} sm={12}>
             <FormItem
+              help={formik.touched.gender && formik.errors.gender ? formik.errors.gender : ''}
+              validateStatus={formik.touched.gender && formik.errors.gender ? 'error' : undefined}
+              label="Gender"
+            >
+              <Select
+                placeholder="Gender"
+                style={{ width: 120 }}
+                value={formik.values.gender}
+                onChange={(value) => formik.setFieldValue('gender', value)}
+                onBlur={formik.handleBlur}
+                onSelect={formik.handleChange}
+              >
+                <Option value="">Select Gender</Option>
+                <Option value="m">Male</Option>
+                <Option value="f">Female</Option>
+                <Option value="o">Other</Option>
+              </Select>
+            </FormItem>
+          </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
+              help={formik.touched.race && formik.errors.race ? formik.errors.race : ''}
+              validateStatus={formik.touched.race && formik.errors.race ? 'error' : undefined}
+              label="Race"
+            >
+              <Select
+                placeholder="Race"
+                value={formik.values.race}
+                onChange={(value) => formik.setFieldValue('race', value)}
+                onBlur={formik.handleBlur}
+                onSelect={formik.handleChange}
+              >
+                <Option value="">Select Race</Option>
+                <Option value="american_indian_alaska_native">American Indian or Alaska Native</Option>
+                <Option value="asian">Asian</Option>
+                <Option value="black_african_american">Black or African American</Option>
+                <Option value="hispanic_latino">Hispanic or Latino</Option>
+                <Option value="native_hawaiian_other_pacific_islander">
+                  Native Hawaiian or Other Pacific Islander
+                </Option>
+                <Option value="white">White</Option>
+                <Option value="other">Other</Option>
+
+              </Select>
+            </FormItem>
+          </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
+              help={formik.touched.birth_year && formik.errors.birth_year ? formik.errors.birth_year : ''}
+              validateStatus={formik.touched.birth_year && formik.errors.birth_year ? 'error' : undefined}
+              label="Birth Year"
+            >
+              <Input
+                name="birth_year"
+                type="number"
+                placeholder="Birth Year"
+                value={formik.values.birth_year}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </FormItem>
+          </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
               help={formik.touched.invite_code && formik.errors.invite_code ? formik.errors.invite_code : ''}
               validateStatus={formik.touched.invite_code && formik.errors.invite_code ? 'error' : undefined}
               label="Invitation Code"
@@ -216,6 +300,101 @@ const RegisterForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =
               />
             </FormItem>
           </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
+              help={formik.touched.city && formik.errors.city ? formik.errors.city : ''}
+              validateStatus={formik.touched.city && formik.errors.city ? 'error' : undefined}
+              label="City"
+            >
+              <Input
+                name="City"
+                placeholder="City"
+                value={formik.values.city}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </FormItem>
+          </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
+              label="State & Country"
+              help={
+                (formik.touched.country && formik.errors.country ? formik.errors.country : '')
+                || (formik.touched.state && formik.errors.state ? formik.errors.state : '')
+              }
+              validateStatus={
+                ((formik.touched.country && formik.errors.country)
+                || (formik.touched.state && formik.errors.state)) ? 'error' : undefined
+            }
+            >
+              <Row gutter={4}>
+                <Col xs={24} sm={12}>
+                  <Select
+                    showSearch
+                    placeholder="Country"
+                    value={formik.values.country}
+                    onChange={(value) => {
+                      formik.setFieldValue('country', value)
+                      formik.setFieldValue('state', '')
+                    }}
+                    onBlur={formik.handleBlur}
+                    onSelect={formik.handleChange}
+                    filterOption={
+                      (input, option) => option.children
+                        .toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    <Option value="">Select Country</Option>
+                    {
+                  CountryRegionData.map((country) => (
+                    <Option key={country[1]} value={country[1]}>{country[0]}</Option>
+                  ))
+                }
+
+                  </Select>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Select
+                    placeholder="State"
+                    showSearch
+                    value={formik.values.state}
+                    onChange={(value) => formik.setFieldValue('state', value)}
+                    onBlur={formik.handleBlur}
+                    onSelect={formik.handleChange}
+                    filterOption={
+                      (input, option) => option.children
+                        .toLowerCase().indexOf(input.toLowerCase()) >= 0
+}
+                  >
+                    <Option value="">Select State</Option>
+                    {
+                  formik.values.country && CountryRegionData
+                    .filter((country) => country[1] === formik.values.country)[0][2].split('|').map((state) => {
+                      const stateArr = state.split('~')
+                      return (
+                        <Option key={stateArr[1]} value={stateArr[1]}>{stateArr[0]}</Option>
+                      )
+                    })
+                }
+                  </Select>
+                </Col>
+              </Row>
+
+              {/* <CountryDropdown
+                value={formik.values.country || ''}
+                onChange={(val) => {
+                  formik.setFieldValue('country', val)
+                  formik.setFieldValue('state', '')
+                }}
+              />
+              <RegionDropdown
+                country={formik.values.country || ''}
+                value={formik.values.state || ''}
+                onChange={(val) => formik.setFieldValue('state', val)}
+              /> */}
+            </FormItem>
+          </Col>
+
           <Col xs={24} sm={12}>
             <FormItem
               label="Password"
