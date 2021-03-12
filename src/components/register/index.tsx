@@ -22,6 +22,8 @@ const initialValues : User = {
   city: '',
   state: '',
   country: '',
+  job_title: '',
+  department: '',
 }
 
 const RegisterComp: React.FC = () => {
@@ -37,10 +39,6 @@ const RegisterComp: React.FC = () => {
       Router.replace('/login')
     } catch (error) {
       console.log('SOMETHING WENT WRONG:', error && error.response)
-      console.log('teststs', error.message)
-      console.log('teststs---', error.response.message)
-      console.log('teststs--- rest', error.response)
-      console.log('teststs--- rest')
 
       message.error(error.response.data.message || 'Something went wrong. - ')
       setLoading(false)

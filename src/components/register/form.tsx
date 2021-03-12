@@ -207,6 +207,38 @@ const RegisterForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =
           </Col>
           <Col xs={24} sm={12}>
             <FormItem
+              help={formik.touched.job_title && formik.errors.job_title ? formik.errors.job_title : ''}
+              validateStatus={formik.touched.job_title && formik.errors.job_title ? 'error' : undefined}
+              label="Job Title"
+
+            >
+              <Input
+                name="job_title"
+                placeholder="Job Title"
+                value={formik.values.job_title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </FormItem>
+          </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
+              help={formik.touched.department && formik.errors.department ? formik.errors.department : ''}
+              validateStatus={formik.touched.department && formik.errors.department ? 'error' : undefined}
+              label="Department"
+
+            >
+              <Input
+                name="department"
+                placeholder="Department"
+                value={formik.values.department}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </FormItem>
+          </Col>
+          <Col xs={24} sm={12}>
+            <FormItem
               help={formik.touched.gender && formik.errors.gender ? formik.errors.gender : ''}
               validateStatus={formik.touched.gender && formik.errors.gender ? 'error' : undefined}
               label="Gender"

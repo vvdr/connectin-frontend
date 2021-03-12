@@ -41,7 +41,7 @@ const ProfileComp: React.FC = () => {
   }, [])
 
   const {
-    first_name, last_name, email, company_name, phone_number, invite_code, gender, birth_year, race, city, state, country,
+    first_name, last_name, email, company_name, phone_number, invite_code, gender, birth_year, race, city, state, country, job_title, department,
   } = user
 
   return (
@@ -83,6 +83,22 @@ const ProfileComp: React.FC = () => {
                 Company:
                 {' '}
                 {company_name}
+              </p>
+
+            </List.Item>
+            <List.Item>
+              <p>
+                Job Title:
+                {' '}
+                {job_title}
+              </p>
+
+            </List.Item>
+            <List.Item>
+              <p>
+                Department:
+                {' '}
+                {department}
               </p>
 
             </List.Item>

@@ -15,4 +15,6 @@ export type User = {
   city?: string
   state?: string
   country?: string
+  job_title?: string
+  department?: string
 }

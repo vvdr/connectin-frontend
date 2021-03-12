@@ -22,6 +22,8 @@ const GET_USER = `
       city
       state
       country
+      job_title
+      department
     }
   }
 `
@@ -42,7 +44,8 @@ const UPDATE_USER = `
       city
       state
       country
-
+      job_title
+      department
     }
   }
 `

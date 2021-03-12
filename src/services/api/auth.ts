@@ -26,6 +26,8 @@ const SIGNUP_HASURA_OPERATION = `
     $city: String!,
     $state: String!,
     $country: String!
+    $job_title: String!,
+    $department: String!
     ) {
     insert_users_one(object: {
       email: $email, 
@@ -42,6 +44,8 @@ const SIGNUP_HASURA_OPERATION = `
       city: $city,
       state: $state,
       country: $country,
+      job_title: $job_title,
+      department: $department
     }){
       user_id,
       first_name,
@@ -67,6 +71,8 @@ export const registerUser = async (data: any) => {
     city,
     state,
     country,
+    job_title,
+    department,
   } = data
 
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -87,6 +93,8 @@ export const registerUser = async (data: any) => {
     city,
     state,
     country,
+    job_title,
+    department,
   }
 
   const body = JSON.stringify({
