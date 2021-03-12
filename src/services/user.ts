@@ -16,6 +16,12 @@ const GET_USER = `
       phone_number
       user_id
       invite_code
+      gender
+      birth_year
+      race
+      city
+      state
+      country
     }
   }
 `
@@ -23,13 +29,20 @@ const GET_USER = `
 const UPDATE_USER = `
   mutation ($user_id: uuid!, $first_name: String!, $last_name: String!,  $company_name: String!,$phone_number: String!) {
     update_users_by_pk(pk_columns: {user_id: $user_id}, _set: { first_name: $first_name, last_name: $last_name, company_name: $company_name, phone_number: $phone_number}) {
-      user_id,
-      first_name,
-      last_name,
-      email,
-      company_name,
-      phone_number,
+      user_id
+      first_name
+      last_name
+      email
+      company_name
+      phone_number
       invite_code
+      gender
+      birth_year
+      race
+      city
+      state
+      country
+
     }
   }
 `

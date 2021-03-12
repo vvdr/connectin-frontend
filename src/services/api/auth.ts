@@ -11,8 +11,38 @@ const axiosConfig = {
 }
 
 const SIGNUP_HASURA_OPERATION = `
-  mutation ($email: String!, $first_name: String!, $last_name: String!, $password: String!, $company_name: String!,$phone_number: String!, $invite_code: String!, $invited_by: uuid!) {
-    insert_users_one(object: {email: $email, first_name: $first_name, last_name: $last_name, password: $password, company_name: $company_name, phone_number: $phone_number, invite_code: $invite_code, invited_by: $invited_by} ) {
+  mutation (
+    $email: String!, 
+    $first_name: String!, 
+    $last_name: String!, 
+    $password: String!, 
+    $company_name: String!,
+    $phone_number: String!, 
+    $invite_code: String!, 
+    $invited_by: uuid!,
+    $gender: gender_enum!,
+    $birth_year: Int!,
+    $race: race_enum!,
+    $city: String!,
+    $state: String!,
+    $country: String!
+    ) {
+    insert_users_one(object: {
+      email: $email, 
+      first_name: $first_name, 
+      last_name: $last_name, 
+      password: $password, 
+      company_name: $company_name, 
+      phone_number: $phone_number, 
+      invite_code: $invite_code, 
+      invited_by: $invited_by,
+      gender: $gender,
+      birth_year: $birth_year,
+      race: $race,
+      city: $city,
+      state: $state,
+      country: $country,
+    }){
       user_id,
       first_name,
       last_name,
@@ -24,7 +54,19 @@ const SIGNUP_HASURA_OPERATION = `
 
 export const registerUser = async (data: any) => {
   const {
-    first_name, last_name, email, password, company_name, phone_number, invited_by,
+    first_name,
+    last_name,
+    email,
+    password,
+    company_name,
+    phone_number,
+    invited_by,
+    gender,
+    birth_year,
+    race,
+    city,
+    state,
+    country,
   } = data
 
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -39,6 +81,12 @@ export const registerUser = async (data: any) => {
     phone_number,
     invite_code,
     invited_by,
+    gender,
+    birth_year,
+    race,
+    city,
+    state,
+    country,
   }
 
   const body = JSON.stringify({

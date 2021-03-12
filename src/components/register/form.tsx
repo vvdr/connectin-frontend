@@ -307,7 +307,7 @@ const RegisterForm: React.FC<Props> = ({ handleSubmit, initialValues }: Props) =
               label="City"
             >
               <Input
-                name="City"
+                name="city"
                 placeholder="City"
                 value={formik.values.city}
                 onChange={formik.handleChange}

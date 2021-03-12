@@ -41,7 +41,7 @@ const ProfileComp: React.FC = () => {
   }, [])
 
   const {
-    first_name, last_name, email, company_name, phone_number, invite_code,
+    first_name, last_name, email, company_name, phone_number, invite_code, gender, birth_year, race, city, state, country,
   } = user
 
   return (
@@ -92,16 +92,55 @@ const ProfileComp: React.FC = () => {
                 {' '}
                 {phone_number}
               </p>
-
             </List.Item>
             <List.Item>
-              test-
-              {' '}
-              {invite_code}
+              <p>
+                Gender:
+                {' '}
+                {gender}
+              </p>
+            </List.Item>
+            <List.Item>
+              <p>
+                Birth Year:
+                {' '}
+                {birth_year}
+              </p>
+            </List.Item>
+            <List.Item>
+              <p>
+                Race:
+                {' '}
+                {race}
+              </p>
+            </List.Item>
+            <List.Item>
+              <p>
+                City:
+                {' '}
+                {city}
+              </p>
+            </List.Item>
+            <List.Item>
+              <p>
+                State:
+                {' '}
+                {state}
+              </p>
+            </List.Item>
+            <List.Item>
+              <p>
+                Country:
+                {' '}
+                {country}
+              </p>
+            </List.Item>
+
+            <List.Item>
               {invite_code && (
               <p>
                 Invitation Code:
-                {' '}
+                {'  '}
                 {invite_code}
 
                 <CopyToClipboard text={`${process.env.NEXT_PUBLIC_BASE_URL}/register?inviteCode=${invite_code}`}>
